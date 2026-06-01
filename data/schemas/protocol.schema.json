@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deckofsweat.local/schemas/protocol.schema.json",
+  "title": "Deck of Sweat Protocol",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["id", "name", "display_name", "time_minutes", "protocol_family", "cards_to_draw", "allows_plyometrics", "max_plyometric_cards", "requires_timer", "instructions_short", "instructions_long", "status", "version", "review_status"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "name": {"type": "string", "minLength": 1},
+    "display_name": {"type": "string", "minLength": 1},
+    "time_minutes": {"type": "integer", "enum": [5, 10, 15]},
+    "protocol_family": {"type": "string", "enum": ["amrap", "emom", "tabata", "pyramid", "ladder", "chipper", "build_stack", "cardio_sandwich", "chaser", "density"]},
+    "cards_to_draw": {"type": "integer", "minimum": 1},
+    "recommended_difficulty_min": {"type": "integer", "minimum": 1, "maximum": 5},
+    "recommended_difficulty_max": {"type": "integer", "minimum": 1, "maximum": 5},
+    "allows_plyometrics": {"type": "boolean"},
+    "max_plyometric_cards": {"type": "integer", "minimum": 0},
+    "requires_timer": {"type": "boolean"},
+    "status": {"type": "string", "enum": ["draft", "active", "retired"]},
+    "review_status": {"type": "string", "enum": ["needs_review", "reviewed", "evidence_checked"]}
+  }
+}
