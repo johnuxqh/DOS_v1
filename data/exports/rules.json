@@ -1,0 +1,82 @@
+[
+  {
+    "id": "avoid_duplicate_movement_pattern",
+    "rule_type": "variety",
+    "name": "Avoid Duplicate Movement Pattern",
+    "description": "Avoid repeated movement patterns unless the protocol intentionally repeats them.",
+    "applies_to": "workout",
+    "value": "unique_movement_patterns",
+    "severity": "warning",
+    "status": "active"
+  },
+  {
+    "id": "beginner_max_difficulty_3",
+    "rule_type": "safety",
+    "name": "Beginner Max Difficulty 3",
+    "description": "Beginner-safe exercises must have difficulty level three or below.",
+    "applies_to": "exercise",
+    "value": "difficulty_level<=3",
+    "severity": "error",
+    "status": "active"
+  },
+  {
+    "id": "include_pull_when_equipment_allows",
+    "rule_type": "balance",
+    "name": "Include Pull When Equipment Allows",
+    "description": "Prefer at least one pulling movement if bands weights or pull-up bar are available.",
+    "applies_to": "workout",
+    "value": "movement_pattern=pull",
+    "severity": "warning",
+    "status": "active"
+  },
+  {
+    "id": "maximum_two_plyometric_cards",
+    "rule_type": "safety",
+    "name": "Maximum Two Plyometric Cards",
+    "description": "Limit jump or high-impact power cards in a workout.",
+    "applies_to": "workout",
+    "value": "max=2",
+    "severity": "error",
+    "status": "active"
+  },
+  {
+    "id": "minimum_one_core_or_stability",
+    "rule_type": "composition",
+    "name": "Minimum One Core or Stability",
+    "description": "Generated workouts should include at least one core or stability card.",
+    "applies_to": "workout",
+    "value": "primary_category=core OR secondary_categories contains stability",
+    "severity": "warning",
+    "status": "active"
+  },
+  {
+    "id": "minimum_one_lower_body",
+    "rule_type": "composition",
+    "name": "Minimum One Lower Body",
+    "description": "Generated workouts should include at least one lower-body card.",
+    "applies_to": "workout",
+    "value": "primary_category=lower_body",
+    "severity": "error",
+    "status": "active"
+  },
+  {
+    "id": "minimum_one_upper_body",
+    "rule_type": "composition",
+    "name": "Minimum One Upper Body",
+    "description": "Generated workouts should include at least one upper-body card when equipment allows.",
+    "applies_to": "workout",
+    "value": "primary_category=upper_body",
+    "severity": "warning",
+    "status": "active"
+  },
+  {
+    "id": "no_high_impact_for_beginner",
+    "rule_type": "safety",
+    "name": "No High Impact for Beginner",
+    "description": "Beginner workouts must not include high-impact exercises.",
+    "applies_to": "exercise",
+    "value": "impact_level!=high",
+    "severity": "error",
+    "status": "active"
+  }
+]

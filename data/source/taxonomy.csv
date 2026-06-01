@@ -1,0 +1,24 @@
+type,id,name,description,status
+movement_pattern,squat,Squat,Knee-dominant lower-body pattern.,active
+movement_pattern,hinge,Hinge,Hip-dominant lower-body pattern.,active
+movement_pattern,push,Push,Upper-body pushing pattern.,active
+movement_pattern,pull,Pull,Upper-body pulling pattern.,active
+movement_pattern,carry,Carry,Loaded locomotion or hold while moving.,active
+movement_pattern,rotate,Rotate,Trunk or hip rotation pattern.,active
+movement_pattern,anti_rotate,Anti-Rotate,Resisting rotation through the trunk.,active
+movement_pattern,locomotion,Locomotion,Crawling stepping or traveling movement.,active
+movement_pattern,jump,Jump,Explosive jumping or landing pattern.,active
+movement_pattern,mobility,Mobility,Controlled range-of-motion movement.,active
+primary_category,upper_body,Upper Body,Primary emphasis on arms shoulders chest or back.,active
+primary_category,lower_body,Lower Body,Primary emphasis on hips legs or glutes.,active
+primary_category,core,Core,Primary emphasis on trunk control.,active
+primary_category,full_body,Full Body,Integrated movement involving upper lower and trunk demands.,active
+primary_category,mobility,Mobility,Range-of-motion or movement-quality emphasis.,active
+primary_category,conditioning,Conditioning,Cardiorespiratory or work-capacity emphasis.,active
+primary_category,power,Power,Explosive force or speed emphasis.,active
+primary_category,stability,Stability,Postural control and joint-position emphasis.,active
+equipment_group,none,None,No equipment group.,active
+equipment_group,band,Band,Resistance band equipment group.,active
+equipment_group,free_weight,Free Weight,Dumbbell kettlebell or similar load.,active
+equipment_group,barbell,Barbell,Barbell-based equipment group.,active
+equipment_group,portable,Portable,Small or movable accessory equipment.,active
