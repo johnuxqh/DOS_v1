@@ -21,6 +21,7 @@ Edit CSV files in `data/source/` when adding or changing content:
 - `exercises.csv` — exercise cards and scoring metadata
 - `protocols.csv` — workout protocol definitions
 - `rules.csv` — workout generation and safety rules
+- `decks.csv` — free/plus/pro packaging for business-model and tracking readiness
 - `equipment.csv` — supported equipment IDs and groups
 - `taxonomy.csv` — controlled vocabulary for patterns, categories, and groups
 
@@ -52,6 +53,7 @@ Use the sample generator to smoke-test the data model:
 
 ```bash
 python scripts/generate_sample_workout.py --equipment bodyweight --time 10 --protocol amrap_10
+python scripts/generate_sample_workout.py --deck free_bodyweight_starter --equipment bodyweight --time 10
 ```
 
 The script loads generated JSON when available, otherwise it reads the CSV source directly.
@@ -70,4 +72,4 @@ This repository is structured to support later phases without locking the projec
 - **Printable card deck:** JSON exports include short and long card text for future print layouts.
 - **Workout generator:** protocol and rule data provide a clear foundation for deterministic or randomized generation.
 - **App integration:** JSON exports are stable machine-readable assets for a future mobile or web app.
-- **Subscription tracking engine:** protocol IDs, exercise IDs, and version fields can later support usage history, progression tracking, and content entitlements.
+- **Subscription tracking engine:** deck IDs, entitlement tiers, protocol IDs, exercise IDs, and version fields can later support usage history, progression tracking, and content entitlements.
