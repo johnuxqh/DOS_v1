@@ -1,0 +1,18 @@
+[project]
+name = "deck-of-sweat-core"
+version = "0.1.0"
+description = "Data foundation for Deck of Sweat exercise, protocol, and validation rules."
+requires-python = ">=3.11"
+dependencies = [
+  "pandas>=2.0",
+  "jsonschema>=4.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
