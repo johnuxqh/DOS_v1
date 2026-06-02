@@ -224,7 +224,6 @@ def validate_schema(name: str, records: list[dict[str, Any]]) -> list[str]:
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
     validator = JsonSchemaValidator(schema) if JsonSchemaValidator else SimpleSchemaValidator(schema)
     errors: list[str] = []
-    
     for record in records:
         for error in sorted(validator.iter_errors(record), key=str):
             path = ".".join(str(part) for part in error.path) or "<root>"

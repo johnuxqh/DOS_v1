@@ -23,6 +23,7 @@ equipment_group,free_weight,Free Weight,Dumbbell kettlebell or similar load.,act
 equipment_group,barbell,Barbell,Barbell-based equipment group.,active
 equipment_group,portable,Portable,Small or movable accessory equipment.,active
 deck,free_bodyweight,Free Bodyweight,Free deck focused on bodyweight cards.,active
+deck,free_bodyweight_starter,Free Bodyweight Starter,Starter Free deck focused on bodyweight beginner-friendly cards.,active
 deck,free_beginner,Free Beginner,Free deck focused on beginner-safe cards.,active
 deck,free_mobility,Free Mobility,Free deck focused on low-intensity mobility and stability.,active
 deck,plus_dumbbell,Plus Dumbbell,Plus deck focused on dumbbell cards.,active

@@ -23,6 +23,35 @@ def load_records(name: str) -> list[dict[str, Any]]:
     return records_from_csv(name)
 
 
+def active_deck_ids() -> set[str]:
+    return {
+        row["id"]
+        for row in load_records("taxonomy")
+        if row.get("type") == "deck" and row.get("status") == "active"
+    }
+
+
+def validate_deck(deck_id: str | None) -> None:
+    if deck_id is None:
+        return
+    if deck_id not in active_deck_ids():
+        raise ValueError(f"No active deck matched '{deck_id}'.")
+
+
+def equipment_from_deck(deck_id: str | None) -> str | None:
+    if deck_id is None:
+        return None
+    if "dumbbell" in deck_id:
+        return "dumbbell"
+    if "kettlebell" in deck_id:
+        return "kettlebell"
+    if "barbell" in deck_id or "strength" in deck_id:
+        return "barbell"
+    if "band" in deck_id:
+        return "resistance_band"
+    return "bodyweight"
+
+
 def equipment_matches(exercise: dict[str, Any], requested: str | list[str]) -> bool:
     requested_items = [requested] if isinstance(requested, str) else requested
     equipment = set(exercise.get("equipment", []))
@@ -116,25 +145,28 @@ def build_workout(
     time: int | None = 10,
     protocol_id: str | None = None,
     template_id: str | None = None,
+    deck_id: str | None = None,
 ) -> dict[str, Any]:
     exercises = load_records("exercises")
     template = None
     movement_focus = None
+    validate_deck(deck_id)
 
     if template_id:
         template = select_template(load_records("workout_templates"), template_id)
         protocol = protocol_from_template(template)
+        deck_id = deck_id or template.get("deck_id")
         equipment_filter: str | list[str] = equipment or template["equipment_required"]
         movement_focus = template.get("movement_focus", [])
     else:
         protocols = load_records("protocols")
         protocol = select_protocol(protocols, time, protocol_id)
-        equipment_filter = equipment or "bodyweight"
+        equipment_filter = equipment or equipment_from_deck(deck_id) or "bodyweight"
 
     cards = select_exercises(exercises, equipment_filter, protocol["cards_to_draw"], movement_focus)
     if not cards:
         raise ValueError("Could not select any cards for the sample workout.")
-    return {"protocol": protocol, "cards": cards, "equipment": equipment_filter, "template": template}
+    return {"protocol": protocol, "cards": cards, "equipment": equipment_filter, "template": template, "deck_id": deck_id}
 
 
 def format_workout(workout: dict[str, Any]) -> str:
@@ -144,6 +176,7 @@ def format_workout(workout: dict[str, Any]) -> str:
         f"Time: {protocol['time_minutes']} minutes",
         f"Protocol: {protocol['display_name']}",
         *( [f"Template: {workout['template']['template_id']} ({workout['template']['tier']})"] if workout.get("template") else [] ),
+        *( [f"Deck: {workout['deck_id']}"] if workout.get("deck_id") else [] ),
         f"Equipment: {workout['equipment']}",
         f"Instructions: {protocol['instructions_short']}",
         "",
@@ -156,16 +189,17 @@ def format_workout(workout: dict[str, Any]) -> str:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate a Deck of Sweat sample workout.")
-parser.add_argument("--equipment", help="Requested equipment id, e.g. bodyweight or dumbbell.")
-parser.add_argument("--time", type=int, default=10, choices=[5, 10, 15], help="Workout duration in minutes.")
-parser.add_argument("--protocol", dest="protocol_id", help="Specific protocol id, e.g. amrap_10.")
-parser.add_argument("--template", dest="template_id", help="Workout template id, e.g. beginner_full_body or emom_12.")
-return parser.parse_args()
+    parser.add_argument("--equipment", help="Requested equipment id, e.g. bodyweight or dumbbell.")
+    parser.add_argument("--time", type=int, default=10, choices=[5, 10, 15], help="Workout duration in minutes.")
+    parser.add_argument("--protocol", dest="protocol_id", help="Specific protocol id, e.g. amrap_10.")
+    parser.add_argument("--template", dest="template_id", help="Workout template id, e.g. beginner_full_body or emom_12.")
+    parser.add_argument("--deck", dest="deck_id", help="Deck id, e.g. free_bodyweight_starter.")
+    return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-print(format_workout(build_workout(args.equipment, args.time, args.protocol_id, args.template_id)))
+    print(format_workout(build_workout(args.equipment, args.time, args.protocol_id, args.template_id, args.deck_id)))
 
 
 if __name__ == "__main__":
