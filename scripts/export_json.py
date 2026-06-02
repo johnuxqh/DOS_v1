@@ -121,7 +121,7 @@ def export_all() -> list[Path]:
     outputs = []
 for name in ("exercises", "protocols", "rules", "workout_templates"):
         outputs.append(write_json(name, records_from_csv(name)))
-    return outputs
+return outputs
 
 
 def main() -> None:
