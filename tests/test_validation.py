@@ -24,11 +24,11 @@ def test_required_files_exist() -> None:
         "data/source/rules.csv",
         "data/source/equipment.csv",
         "data/source/taxonomy.csv",
-        "data/source/workout_templates.csv",
-        "data/schemas/exercise.schema.json",
-        "data/schemas/protocol.schema.json",
-        "data/schemas/rule.schema.json",
-        "data/schemas/workout_template.schema.json",
+"data/source/workout_templates.csv",
+"data/schemas/exercise.schema.json",
+"data/schemas/protocol.schema.json",
+"data/schemas/rule.schema.json",
+"data/schemas/workout_template.schema.json",
     ]
     for file_path in required_files:
         assert (ROOT / file_path).exists(), file_path
@@ -60,7 +60,7 @@ def test_export_json_creates_json_files() -> None:
 
 def test_generated_json_is_schema_valid() -> None:
     export_all()
-    for export_name in ("exercises", "protocols", "rules", "workout_templates"):
+for export_name in ("exercises", "protocols", "rules", "workout_templates"):
         records = json.loads((ROOT / "data" / "exports" / f"{export_name}.json").read_text(encoding="utf-8"))
         assert validate_schema(export_name, records) == []
 

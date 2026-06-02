@@ -106,8 +106,8 @@ def records_from_csv(name: str) -> list[dict[str, Any]]:
             else:
                 record[key] = clean_scalar(value)
         records.append(record)
-    sort_key = "template_id" if name == "workout_templates" else "id"
-    return sorted(records, key=lambda item: item[sort_key])
+sort_key = "template_id" if name == "workout_templates" else "id"
+return sorted(records, key=lambda item: item[sort_key])
 
 
 def write_json(name: str, records: list[dict[str, Any]]) -> Path:
@@ -119,7 +119,7 @@ def write_json(name: str, records: list[dict[str, Any]]) -> Path:
 
 def export_all() -> list[Path]:
     outputs = []
-    for name in ("exercises", "protocols", "rules", "workout_templates"):
+for name in ("exercises", "protocols", "rules", "workout_templates"):
         outputs.append(write_json(name, records_from_csv(name)))
     return outputs
 

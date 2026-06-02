@@ -28,7 +28,7 @@ def equipment_matches(exercise: dict[str, Any], requested: str | list[str]) -> b
     equipment = set(exercise.get("equipment", []))
     if "bodyweight" in requested_items and "bodyweight" in equipment:
         return True
-    return "bodyweight" in equipment or any(item in equipment for item in requested_items)
+    return "bodyweight" in equipment or any(item in equipment for item in requested_items)n
 
 
 def select_protocol(protocols: list[dict[str, Any]], time: int | None, protocol_id: str | None) -> dict[str, Any]:
@@ -156,16 +156,16 @@ def format_workout(workout: dict[str, Any]) -> str:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate a Deck of Sweat sample workout.")
-    parser.add_argument("--equipment", help="Requested equipment id, e.g. bodyweight or dumbbell.")
-    parser.add_argument("--time", type=int, default=10, choices=[5, 10, 15], help="Workout duration in minutes.")
-    parser.add_argument("--protocol", dest="protocol_id", help="Specific protocol id, e.g. amrap_10.")
-    parser.add_argument("--template", dest="template_id", help="Workout template id, e.g. beginner_full_body or emom_12.")
+parser.add_argument("--equipment", help="Requested equipment id, e.g. bodyweight or dumbbell.")
+parser.add_argument("--time", type=int, default=10, choices=[5, 10, 15], help="Workout duration in minutes.")
+parser.add_argument("--protocol", dest="protocol_id", help="Specific protocol id, e.g. amrap_10.")
+parser.add_argument("--template", dest="template_id", help="Workout template id, e.g. beginner_full_body or emom_12.")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    print(format_workout(build_workout(args.equipment, args.time, args.protocol_id, args.template_id)))
+print(format_workout(build_workout(args.equipment, args.time, args.protocol_id, args.template_id)))
 
 
 if __name__ == "__main__":
