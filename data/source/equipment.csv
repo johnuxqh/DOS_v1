@@ -1,0 +1,10 @@
+id,name,equipment_group,description,portable,status
+bodyweight,Bodyweight,none,No external equipment required.,TRUE,active
+resistance_band,Resistance Band,band,Loop or handled band for resistance and assistance.,TRUE,active
+dumbbell,Dumbbell,free_weight,Single or paired handheld free weights.,TRUE,active
+kettlebell,Kettlebell,free_weight,Ballistic or strength free weight with handle.,TRUE,active
+barbell,Barbell,barbell,Loaded straight bar used for compound lifts.,FALSE,active
+bench,Bench,portable,Stable flat or adjustable bench.,FALSE,active
+box,Box,portable,Stable plyometric box or step platform.,FALSE,active
+jump_rope,Jump Rope,portable,Rope used for rhythmic conditioning.,TRUE,active
+pull_up_bar,Pull-Up Bar,portable,Mounted or portable bar for hanging and pulling work.,FALSE,active
