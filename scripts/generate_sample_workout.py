@@ -28,7 +28,7 @@ def equipment_matches(exercise: dict[str, Any], requested: str | list[str]) -> b
     equipment = set(exercise.get("equipment", []))
     if "bodyweight" in requested_items and "bodyweight" in equipment:
         return True
-    return "bodyweight" in equipment or any(item in equipment for item in requested_items)n
+    return "bodyweight" in equipment or any(item in equipment for item in requested_items)
 
 
 def select_protocol(protocols: list[dict[str, Any]], time: int | None, protocol_id: str | None) -> dict[str, Any]:
