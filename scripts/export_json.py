@@ -109,7 +109,6 @@ def records_from_csv(name: str) -> list[dict[str, Any]]:
     sort_key = "template_id" if name == "workout_templates" else "id"
     return sorted(records, key=lambda item: item[sort_key])
 
-
 def write_json(name: str, records: list[dict[str, Any]]) -> Path:
     EXPORT_DIR.mkdir(parents=True, exist_ok=True)
     output_path = EXPORT_DIR / f"{name}.json"
