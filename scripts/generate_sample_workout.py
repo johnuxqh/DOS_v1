@@ -160,7 +160,7 @@ parser.add_argument("--equipment", help="Requested equipment id, e.g. bodyweight
 parser.add_argument("--time", type=int, default=10, choices=[5, 10, 15], help="Workout duration in minutes.")
 parser.add_argument("--protocol", dest="protocol_id", help="Specific protocol id, e.g. amrap_10.")
 parser.add_argument("--template", dest="template_id", help="Workout template id, e.g. beginner_full_body or emom_12.")
-    return parser.parse_args()
+return parser.parse_args()
 
 
 def main() -> None:
