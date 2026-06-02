@@ -20,11 +20,18 @@ ARRAY_FIELDS = {
         "coaching_cues",
         "safety_notes",
         "contraindications",
-    }
+    },
+    "workout_templates": {
+        "equipment_required",
+        "movement_focus",
+        "coaching_notes",
+        "safety_notes",
+    },
 }
 BOOL_FIELDS = {
     "exercises": {"beginner_safe"},
     "protocols": {"allows_plyometrics", "requires_timer"},
+    "workout_templates": {"tracking_enabled"},
 }
 INT_FIELDS = {
     "exercises": {
@@ -43,6 +50,12 @@ INT_FIELDS = {
         "recommended_difficulty_min",
         "recommended_difficulty_max",
         "max_plyometric_cards",
+    },
+    "workout_templates": {
+        "duration_minutes",
+        "rounds",
+        "work_seconds",
+        "rest_seconds",
     },
 }
 
@@ -93,7 +106,8 @@ def records_from_csv(name: str) -> list[dict[str, Any]]:
             else:
                 record[key] = clean_scalar(value)
         records.append(record)
-    return sorted(records, key=lambda item: item["id"])
+sort_key = "template_id" if name == "workout_templates" else "id"
+return sorted(records, key=lambda item: item[sort_key])
 
 
 def write_json(name: str, records: list[dict[str, Any]]) -> Path:
@@ -105,7 +119,7 @@ def write_json(name: str, records: list[dict[str, Any]]) -> Path:
 
 def export_all() -> list[Path]:
     outputs = []
-    for name in ("exercises", "protocols", "rules"):
+for name in ("exercises", "protocols", "rules", "workout_templates"):
         outputs.append(write_json(name, records_from_csv(name)))
     return outputs
 

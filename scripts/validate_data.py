@@ -42,6 +42,11 @@ REQUIRED_COLUMNS = {
     "rules": ["id", "rule_type", "name", "description", "applies_to", "value", "severity", "status"],
     "equipment": ["id", "name", "equipment_group", "description", "portable", "status"],
     "taxonomy": ["type", "id", "name", "description", "status"],
+    "workout_templates": [
+        "template_id", "template_name", "description", "tier", "deck_id", "protocol_type", "duration_minutes",
+        "rounds", "work_seconds", "rest_seconds", "target_intensity", "equipment_required", "movement_focus",
+        "scoring_method", "tracking_enabled", "coaching_notes", "safety_notes",
+    ],
 }
 
 ENUMS = {
@@ -59,6 +64,11 @@ ENUMS = {
         "review_status": {"needs_review", "reviewed", "evidence_checked"},
     },
     "rules": {"severity": {"warning", "error"}, "status": {"draft", "active", "retired"}},
+    "workout_templates": {
+        "tier": {"free", "plus", "pro"},
+        "protocol_type": {"amrap", "emom", "circuit", "ladder", "mobility_flow", "tabata", "chipper", "density"},
+        "tracking_enabled": {"TRUE", "FALSE"},
+    },
 }
 
 RANGES = {
@@ -75,6 +85,12 @@ RANGES = {
         "recommended_difficulty_min": (1, 5),
         "recommended_difficulty_max": (1, 5),
         "max_plyometric_cards": (0, 99),
+    },
+    "workout_templates": {
+        "duration_minutes": (1, 240),
+        "rounds": (1, 99),
+        "work_seconds": (0, 3600),
+        "rest_seconds": (0, 3600),
     },
 }
 
@@ -99,17 +115,22 @@ def validate_required_columns(name: str, columns: list[str]) -> list[str]:
     return [f"{name}: missing required column '{column}'" for column in missing]
 
 
+def record_id_field(name: str) -> str:
+    return "template_id" if name == "workout_templates" else "id"
+
+
 def validate_ids(name: str, rows: list[dict[str, str]]) -> list[str]:
     errors: list[str] = []
     seen: set[str] = set()
+    id_field = record_id_field(name)
     for row in rows:
-        item = row.get("id", "")
+        item = row.get(id_field, "")
         unique_key = f"{row.get('type', '')}:{item}" if name == "taxonomy" else item
         if unique_key in seen:
-            errors.append(f"{name}: duplicate id '{item}'")
+            errors.append(f"{name}: duplicate {id_field} '{item}'")
         seen.add(unique_key)
         if not re.match(r"^[a-z][a-z0-9_]*$", item):
-            errors.append(f"{name}: id '{item}' must be lowercase snake_case")
+            errors.append(f"{name}: {id_field} '{item}' must be lowercase snake_case")
     return errors
 
 
@@ -198,13 +219,16 @@ def validate_schema(name: str, records: list[dict[str, Any]]) -> list[str]:
         schema_path = SCHEMA_DIR / "protocol.schema.json"
     if name == "rules":
         schema_path = SCHEMA_DIR / "rule.schema.json"
+    if name == "workout_templates":
+        schema_path = SCHEMA_DIR / "workout_template.schema.json"
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
     validator = JsonSchemaValidator(schema) if JsonSchemaValidator else SimpleSchemaValidator(schema)
     errors: list[str] = []
     for record in records:
         for error in sorted(validator.iter_errors(record), key=str):
             path = ".".join(str(part) for part in error.path) or "<root>"
-            errors.append(f"{name}: id '{record.get('id', '<missing>')}' schema error at {path}: {error.message}")
+record_id = record.get(record_id_field(name), record.get("id", "<missing>"))
+errors.append(f"{name}: id '{record_id}' schema error at {path}: {error.message}")
     return errors
 
 def validate_exercise_business_rules(records: list[dict[str, Any]]) -> list[str]:
@@ -240,8 +264,30 @@ def validate_protocol_business_rules(records: list[dict[str, Any]]) -> list[str]
     return errors
 
 
+def deck_ids_from_taxonomy_rows(rows: list[dict[str, str]]) -> set[str]:
+    return {row["id"] for row in rows if row.get("type") == "deck" and row.get("status") == "active"}
+
+
+def validate_workout_template_business_rules(records: list[dict[str, Any]], deck_ids: set[str]) -> list[str]:
+    errors: list[str] = []
+    for record in records:
+        template_id = record["template_id"]
+        if record["deck_id"] not in deck_ids:
+            errors.append(f"workout_templates: template '{template_id}' references unknown deck_id '{record['deck_id']}'")
+        if record["duration_minutes"] <= 0:
+            errors.append(f"workout_templates: template '{template_id}' duration_minutes must be positive")
+        if record["rounds"] <= 0:
+            errors.append(f"workout_templates: template '{template_id}' rounds must be positive")
+        if record["work_seconds"] < 0 or record["rest_seconds"] < 0:
+            errors.append(f"workout_templates: template '{template_id}' work_seconds and rest_seconds must be non-negative")
+        if record["protocol_type"] in {"emom", "tabata", "circuit", "mobility_flow"} and record["work_seconds"] <= 0:
+            errors.append(f"workout_templates: template '{template_id}' protocol_type '{record['protocol_type']}' requires work_seconds > 0")
+    return errors
+
+
 def run_validation() -> list[str]:
     errors: list[str] = []
+    taxonomy_rows: list[dict[str, str]] = []
     for name in REQUIRED_COLUMNS:
         try:
             rows = load_rows(name)
@@ -253,8 +299,12 @@ def run_validation() -> list[str]:
         errors.extend(validate_ids(name, rows))
         errors.extend(validate_enums(name, rows))
         errors.extend(validate_ranges(name, rows))
+        if name == "taxonomy":
+            taxonomy_rows = rows
 
-    for name in ("exercises", "protocols", "rules"):
+    deck_ids = deck_ids_from_taxonomy_rows(taxonomy_rows)
+
+    for name in ("exercises", "protocols", "rules", "workout_templates"):
         try:
             records = records_from_csv(name)
         except Exception as exc:  # noqa: BLE001 - validation should report conversion failures clearly.
@@ -265,6 +315,8 @@ def run_validation() -> list[str]:
             errors.extend(validate_exercise_business_rules(records))
         if name == "protocols":
             errors.extend(validate_protocol_business_rules(records))
+        if name == "workout_templates":
+            errors.extend(validate_workout_template_business_rules(records, deck_ids))
     return errors
 
 

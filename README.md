@@ -21,6 +21,7 @@ Edit CSV files in `data/source/` when adding or changing content:
 - `exercises.csv` — exercise cards and scoring metadata
 - `protocols.csv` — workout protocol definitions
 - `rules.csv` — workout generation and safety rules
+- `workout_templates.csv` — reusable workout-template presets
 - `decks.csv` — free/plus/pro packaging for business-model and tracking readiness
 - `equipment.csv` — supported equipment IDs and groups
 - `taxonomy.csv` — controlled vocabulary for patterns, categories, and groups
@@ -29,6 +30,7 @@ Pipe-separated fields, such as `equipment` or `coaching_cues`, are converted to 
 
 ## JSON exports are generated
 
+Files in `data/exports/` are generated from CSV, including workout templates, and should be refreshed after source changes:
 Files in `data/exports/` are generated from CSV and should be refreshed after source changes:
 
 ```bash
@@ -45,7 +47,7 @@ Run validation before committing any data change:
 python scripts/validate_data.py
 ```
 
-Validation checks required columns, unique lowercase snake_case IDs, enum values, numeric ranges, JSON Schema compliance, and basic business rules such as beginner safety and protocol card limits.
+Validation checks required columns, unique lowercase snake_case IDs, enum values, numeric ranges, JSON Schema compliance, workout-template deck references, and basic business rules such as beginner safety and protocol card limits.
 
 ## Generate a sample workout
 
@@ -53,6 +55,7 @@ Use the sample generator to smoke-test the data model:
 
 ```bash
 python scripts/generate_sample_workout.py --equipment bodyweight --time 10 --protocol amrap_10
+python scripts/generate_sample_workout.py --template beginner_full_body
 python scripts/generate_sample_workout.py --deck free_bodyweight_starter --equipment bodyweight --time 10
 ```
 
@@ -70,6 +73,6 @@ This repository is structured to support later phases without locking the projec
 
 - **Google Sheets prototype:** CSV source files can be imported to or exported from Sheets with stable headers.
 - **Printable card deck:** JSON exports include short and long card text for future print layouts.
-- **Workout generator:** protocol and rule data provide a clear foundation for deterministic or randomized generation.
+- **Workout generator:** protocol, template, and rule data provide a clear foundation for deterministic or randomized generation.
 - **App integration:** JSON exports are stable machine-readable assets for a future mobile or web app.
-- **Subscription tracking engine:** deck IDs, entitlement tiers, protocol IDs, exercise IDs, and version fields can later support usage history, progression tracking, and content entitlements.
+- **Subscription tracking engine:** deck IDs, entitlement tiers, protocol IDs, exercise IDs, template IDs, and version fields can later support usage history, progression tracking, and content entitlements.
