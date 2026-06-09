@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deckofsweat.local/schemas/workout_composition_rule.schema.json",
+  "title": "Deck of Sweat Workout Composition Rule",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["composition_id", "composition_name", "description", "active", "applies_to_template_id", "applies_to_protocol_type", "slot_order", "slot_name", "required_movement_pattern", "allowed_movement_patterns", "required_primary_category", "allowed_primary_categories", "min_difficulty", "max_difficulty", "preferred_equipment", "fallback_allowed", "priority"],
+  "properties": {
+    "composition_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "composition_name": {"type": "string", "minLength": 1},
+    "description": {"type": "string", "minLength": 1},
+    "active": {"type": "boolean"},
+    "applies_to_template_id": {"type": "string", "minLength": 1},
+    "applies_to_protocol_type": {"type": "string", "enum": ["amrap", "emom", "circuit", "ladder", "mobility_flow", "tabata", "chipper", "density"]},
+    "slot_order": {"type": "integer", "minimum": 1},
+    "slot_name": {"type": "string", "minLength": 1},
+    "required_movement_pattern": {"type": "string"},
+    "allowed_movement_patterns": {"type": "array", "items": {"type": "string"}},
+    "required_primary_category": {"type": "string"},
+    "allowed_primary_categories": {"type": "array", "items": {"type": "string"}},
+    "min_difficulty": {"type": "integer", "minimum": 0, "maximum": 5},
+    "max_difficulty": {"type": "integer", "minimum": 0, "maximum": 5},
+    "preferred_equipment": {"type": "array", "items": {"type": "string"}},
+    "fallback_allowed": {"type": "boolean"},
+    "priority": {"type": "integer", "minimum": 1}
+  }
+}

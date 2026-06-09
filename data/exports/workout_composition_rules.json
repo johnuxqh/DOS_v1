@@ -1,0 +1,387 @@
+[
+  {
+    "composition_id": "beginner_full_body",
+    "composition_name": "Beginners Full Body Balance",
+    "description": "Balanced five-slot beginner workout.",
+    "active": true,
+    "applies_to_template_id": "beginner_full_body",
+    "applies_to_protocol_type": "circuit",
+    "slot_order": 1,
+    "slot_name": "lower_body",
+    "required_movement_pattern": "",
+    "allowed_movement_patterns": [
+      "squat",
+      "hinge"
+    ],
+    "required_primary_category": "lower_body",
+    "allowed_primary_categories": [],
+    "min_difficulty": 1,
+    "max_difficulty": 3,
+    "preferred_equipment": [
+      "bodyweight",
+      "resistance_band"
+    ],
+    "fallback_allowed": true,
+    "priority": 10
+  },
+  {
+    "composition_id": "beginner_full_body",
+    "composition_name": "Beginners Full Body Balance",
+    "description": "Balanced five-slot beginner workout.",
+    "active": true,
+    "applies_to_template_id": "beginner_full_body",
+    "applies_to_protocol_type": "circuit",
+    "slot_order": 2,
+    "slot_name": "push",
+    "required_movement_pattern": "push",
+    "allowed_movement_patterns": [],
+    "required_primary_category": "",
+    "allowed_primary_categories": [],
+    "min_difficulty": 1,
+    "max_difficulty": 3,
+    "preferred_equipment": [
+      "bodyweight"
+    ],
+    "fallback_allowed": true,
+    "priority": 20
+  },
+  {
+    "composition_id": "beginner_full_body",
+    "composition_name": "Beginners Full Body Balance",
+    "description": "Balanced five-slot beginner workout.",
+    "active": true,
+    "applies_to_template_id": "beginner_full_body",
+    "applies_to_protocol_type": "circuit",
+    "slot_order": 3,
+    "slot_name": "pull_or_posterior_chain",
+    "required_movement_pattern": "",
+    "allowed_movement_patterns": [
+      "pull",
+      "hinge"
+    ],
+    "required_primary_category": "",
+    "allowed_primary_categories": [],
+    "min_difficulty": 1,
+    "max_difficulty": 3,
+    "preferred_equipment": [
+      "resistance_band",
+      "bodyweight"
+    ],
+    "fallback_allowed": true,
+    "priority": 30
+  },
+  {
+    "composition_id": "beginner_full_body",
+    "composition_name": "Beginners Full Body Balance",
+    "description": "Balanced five-slot beginner workout.",
+    "active": true,
+    "applies_to_template_id": "beginner_full_body",
+    "applies_to_protocol_type": "circuit",
+    "slot_order": 4,
+    "slot_name": "core",
+    "required_movement_pattern": "",
+    "allowed_movement_patterns": [],
+    "required_primary_category": "core",
+    "allowed_primary_categories": [],
+    "min_difficulty": 1,
+    "max_difficulty": 3,
+    "preferred_equipment": [
+      "bodyweight"
+    ],
+    "fallback_allowed": true,
+    "priority": 40
+  },
+  {
+    "composition_id": "beginner_full_body",
+    "composition_name": "Beginners Full Body Balance",
+    "description": "Balanced five-slot beginner workout.",
+    "active": true,
+    "applies_to_template_id": "beginner_full_body",
+    "applies_to_protocol_type": "circuit",
+    "slot_order": 5,
+    "slot_name": "mobility_finisher",
+    "required_movement_pattern": "",
+    "allowed_movement_patterns": [
+      "mobility",
+      "anti_rotate",
+      "hinge"
+    ],
+    "required_primary_category": "",
+    "allowed_primary_categories": [
+      "mobility",
+      "stability"
+    ],
+    "min_difficulty": 1,
+    "max_difficulty": 3,
+    "preferred_equipment": [
+      "bodyweight"
+    ],
+    "fallback_allowed": true,
+    "priority": 50
+  },
+  {
+    "composition_id": "emom_12",
+    "composition_name": "EMOM 12 Balance",
+    "description": "Balanced four-station EMOM rotation.",
+    "active": true,
+    "applies_to_template_id": "emom_12",
+    "applies_to_protocol_type": "emom",
+    "slot_order": 1,
+    "slot_name": "lower_body",
+    "required_movement_pattern": "",
+    "allowed_movement_patterns": [
+      "squat",
+      "hinge"
+    ],
+    "required_primary_category": "lower_body",
+    "allowed_primary_categories": [],
+    "min_difficulty": 1,
+    "max_difficulty": 3,
+    "preferred_equipment": [
+      "bodyweight",
+      "dumbbell",
+      "resistance_band"
+    ],
+    "fallback_allowed": true,
+    "priority": 10
+  },
+  {
+    "composition_id": "emom_12",
+    "composition_name": "EMOM 12 Balance",
+    "description": "Balanced four-station EMOM rotation.",
+    "active": true,
+    "applies_to_template_id": "emom_12",
+    "applies_to_protocol_type": "emom",
+    "slot_order": 2,
+    "slot_name": "upper_body",
+    "required_movement_pattern": "",
+    "allowed_movement_patterns": [
+      "push",
+      "pull"
+    ],
+    "required_primary_category": "upper_body",
+    "allowed_primary_categories": [],
+    "min_difficulty": 1,
+    "max_difficulty": 3,
+    "preferred_equipment": [
+      "bodyweight",
+      "dumbbell",
+      "resistance_band"
+    ],
+    "fallback_allowed": true,
+    "priority": 20
+  },
+  {
+    "composition_id": "emom_12",
+    "composition_name": "EMOM 12 Balance",
+    "description": "Balanced four-station EMOM rotation.",
+    "active": true,
+    "applies_to_template_id": "emom_12",
+    "applies_to_protocol_type": "emom",
+    "slot_order": 3,
+    "slot_name": "core",
+    "required_movement_pattern": "",
+    "allowed_movement_patterns": [
+      "anti_rotate"
+    ],
+    "required_primary_category": "core",
+    "allowed_primary_categories": [],
+    "min_difficulty": 1,
+    "max_difficulty": 3,
+    "preferred_equipment": [
+      "bodyweight",
+      "resistance_band"
+    ],
+    "fallback_allowed": true,
+    "priority": 30
+  },
+  {
+    "composition_id": "emom_12",
+    "composition_name": "EMOM 12 Balance",
+    "description": "Balanced four-station EMOM rotation.",
+    "active": true,
+    "applies_to_template_id": "emom_12",
+    "applies_to_protocol_type": "emom",
+    "slot_order": 4,
+    "slot_name": "full_body",
+    "required_movement_pattern": "",
+    "allowed_movement_patterns": [
+      "carry",
+      "locomotion"
+    ],
+    "required_primary_category": "",
+    "allowed_primary_categories": [
+      "full_body",
+      "conditioning"
+    ],
+    "min_difficulty": 1,
+    "max_difficulty": 3,
+    "preferred_equipment": [
+      "bodyweight",
+      "dumbbell"
+    ],
+    "fallback_allowed": true,
+    "priority": 40
+  },
+  {
+    "composition_id": "hotel_bodyweight",
+    "composition_name": "Hotel Bodyweight Balance",
+    "description": "Quiet balanced four-slot hotel workout.",
+    "active": true,
+    "applies_to_template_id": "hotel_no_equipment",
+    "applies_to_protocol_type": "circuit",
+    "slot_order": 1,
+    "slot_name": "lower_body",
+    "required_movement_pattern": "",
+    "allowed_movement_patterns": [
+      "squat",
+      "hinge"
+    ],
+    "required_primary_category": "lower_body",
+    "allowed_primary_categories": [],
+    "min_difficulty": 1,
+    "max_difficulty": 3,
+    "preferred_equipment": [
+      "bodyweight"
+    ],
+    "fallback_allowed": true,
+    "priority": 10
+  },
+  {
+    "composition_id": "hotel_bodyweight",
+    "composition_name": "Hotel Bodyweight Balance",
+    "description": "Quiet balanced four-slot hotel workout.",
+    "active": true,
+    "applies_to_template_id": "hotel_no_equipment",
+    "applies_to_protocol_type": "circuit",
+    "slot_order": 2,
+    "slot_name": "upper_body_push",
+    "required_movement_pattern": "push",
+    "allowed_movement_patterns": [],
+    "required_primary_category": "",
+    "allowed_primary_categories": [],
+    "min_difficulty": 1,
+    "max_difficulty": 3,
+    "preferred_equipment": [
+      "bodyweight"
+    ],
+    "fallback_allowed": true,
+    "priority": 20
+  },
+  {
+    "composition_id": "hotel_bodyweight",
+    "composition_name": "Hotel Bodyweight Balance",
+    "description": "Quiet balanced four-slot hotel workout.",
+    "active": true,
+    "applies_to_template_id": "hotel_no_equipment",
+    "applies_to_protocol_type": "circuit",
+    "slot_order": 3,
+    "slot_name": "core",
+    "required_movement_pattern": "",
+    "allowed_movement_patterns": [],
+    "required_primary_category": "core",
+    "allowed_primary_categories": [],
+    "min_difficulty": 1,
+    "max_difficulty": 3,
+    "preferred_equipment": [
+      "bodyweight"
+    ],
+    "fallback_allowed": true,
+    "priority": 30
+  },
+  {
+    "composition_id": "hotel_bodyweight",
+    "composition_name": "Hotel Bodyweight Balance",
+    "description": "Quiet balanced four-slot hotel workout.",
+    "active": true,
+    "applies_to_template_id": "hotel_no_equipment",
+    "applies_to_protocol_type": "circuit",
+    "slot_order": 4,
+    "slot_name": "conditioning",
+    "required_movement_pattern": "",
+    "allowed_movement_patterns": [
+      "locomotion"
+    ],
+    "required_primary_category": "",
+    "allowed_primary_categories": [
+      "conditioning",
+      "full_body"
+    ],
+    "min_difficulty": 1,
+    "max_difficulty": 3,
+    "preferred_equipment": [
+      "bodyweight"
+    ],
+    "fallback_allowed": true,
+    "priority": 40
+  },
+  {
+    "composition_id": "mobility_flow",
+    "composition_name": "Mobility Flow Balance",
+    "description": "Three-slot mobility and stability flow.",
+    "active": true,
+    "applies_to_template_id": "mobility_flow_10",
+    "applies_to_protocol_type": "mobility_flow",
+    "slot_order": 1,
+    "slot_name": "posterior_chain",
+    "required_movement_pattern": "hinge",
+    "allowed_movement_patterns": [],
+    "required_primary_category": "",
+    "allowed_primary_categories": [],
+    "min_difficulty": 1,
+    "max_difficulty": 2,
+    "preferred_equipment": [
+      "bodyweight"
+    ],
+    "fallback_allowed": true,
+    "priority": 10
+  },
+  {
+    "composition_id": "mobility_flow",
+    "composition_name": "Mobility Flow Balance",
+    "description": "Three-slot mobility and stability flow.",
+    "active": true,
+    "applies_to_template_id": "mobility_flow_10",
+    "applies_to_protocol_type": "mobility_flow",
+    "slot_order": 2,
+    "slot_name": "core_control",
+    "required_movement_pattern": "anti_rotate",
+    "allowed_movement_patterns": [],
+    "required_primary_category": "core",
+    "allowed_primary_categories": [],
+    "min_difficulty": 1,
+    "max_difficulty": 2,
+    "preferred_equipment": [
+      "bodyweight"
+    ],
+    "fallback_allowed": true,
+    "priority": 20
+  },
+  {
+    "composition_id": "mobility_flow",
+    "composition_name": "Mobility Flow Balance",
+    "description": "Three-slot mobility and stability flow.",
+    "active": true,
+    "applies_to_template_id": "mobility_flow_10",
+    "applies_to_protocol_type": "mobility_flow",
+    "slot_order": 3,
+    "slot_name": "stability_finish",
+    "required_movement_pattern": "",
+    "allowed_movement_patterns": [
+      "anti_rotate",
+      "hinge"
+    ],
+    "required_primary_category": "",
+    "allowed_primary_categories": [
+      "stability",
+      "mobility"
+    ],
+    "min_difficulty": 1,
+    "max_difficulty": 2,
+    "preferred_equipment": [
+      "bodyweight"
+    ],
+    "fallback_allowed": true,
+    "priority": 30
+  }
+]

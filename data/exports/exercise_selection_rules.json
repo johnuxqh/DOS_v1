@@ -1,0 +1,158 @@
+[
+  {
+    "rule_id": "beginner_full_body",
+    "rule_name": "Beginner Full Body Eligibility",
+    "description": "Keep beginner full-body workouts low-skill low-impact and balanced.",
+    "active": true,
+    "priority": 10,
+    "applies_to_template_id": "beginner_full_body",
+    "applies_to_deck_id": "free_beginner",
+    "allowed_movement_patterns": [
+      "squat",
+      "hinge",
+      "push",
+      "pull",
+      "anti_rotate",
+      "carry",
+      "locomotion"
+    ],
+    "excluded_movement_patterns": [
+      "jump"
+    ],
+    "required_equipment": [
+      "bodyweight",
+      "resistance_band"
+    ],
+    "excluded_equipment": [
+      "barbell"
+    ],
+    "min_difficulty": 1,
+    "max_difficulty": 3,
+    "include_tags": [
+      "lower_body",
+      "upper_body",
+      "core"
+    ],
+    "exclude_tags": [
+      "high_impact"
+    ],
+    "allow_progressions": false,
+    "allow_regressions": true,
+    "max_repeats_per_workout": 1
+  },
+  {
+    "rule_id": "emom_12",
+    "rule_name": "EMOM 12 Eligibility",
+    "description": "Prefer repeatable full-body cards that fit twelve-minute EMOM pacing.",
+    "active": true,
+    "priority": 30,
+    "applies_to_template_id": "emom_12",
+    "applies_to_deck_id": "plus_mixed",
+    "allowed_movement_patterns": [
+      "squat",
+      "hinge",
+      "push",
+      "pull",
+      "carry",
+      "anti_rotate",
+      "locomotion"
+    ],
+    "excluded_movement_patterns": [
+      "jump"
+    ],
+    "required_equipment": [
+      "bodyweight",
+      "dumbbell",
+      "resistance_band"
+    ],
+    "excluded_equipment": [
+      "barbell"
+    ],
+    "min_difficulty": 1,
+    "max_difficulty": 3,
+    "include_tags": [
+      "full_body",
+      "upper_body",
+      "lower_body",
+      "core"
+    ],
+    "exclude_tags": [
+      "high_impact"
+    ],
+    "allow_progressions": true,
+    "allow_regressions": true,
+    "max_repeats_per_workout": 1
+  },
+  {
+    "rule_id": "hotel_bodyweight",
+    "rule_name": "Hotel Bodyweight Eligibility",
+    "description": "Limit hotel workouts to quiet no-equipment bodyweight movements.",
+    "active": true,
+    "priority": 20,
+    "applies_to_template_id": "hotel_no_equipment",
+    "applies_to_deck_id": "free_bodyweight",
+    "allowed_movement_patterns": [
+      "squat",
+      "hinge",
+      "push",
+      "anti_rotate",
+      "locomotion"
+    ],
+    "excluded_movement_patterns": [
+      "jump"
+    ],
+    "required_equipment": [
+      "bodyweight"
+    ],
+    "excluded_equipment": [
+      "dumbbell",
+      "kettlebell",
+      "barbell",
+      "bench",
+      "box"
+    ],
+    "min_difficulty": 1,
+    "max_difficulty": 3,
+    "include_tags": [
+      "bodyweight"
+    ],
+    "exclude_tags": [
+      "high_impact"
+    ],
+    "allow_progressions": false,
+    "allow_regressions": true,
+    "max_repeats_per_workout": 1
+  },
+  {
+    "rule_id": "mobility_flow",
+    "rule_name": "Mobility Flow Eligibility",
+    "description": "Select low-intensity mobility and stability cards for recovery flows.",
+    "active": true,
+    "priority": 40,
+    "applies_to_template_id": "mobility_flow_10",
+    "applies_to_deck_id": "free_mobility",
+    "allowed_movement_patterns": [
+      "anti_rotate",
+      "mobility",
+      "hinge"
+    ],
+    "excluded_movement_patterns": [],
+    "required_equipment": [
+      "bodyweight"
+    ],
+    "excluded_equipment": [],
+    "min_difficulty": 1,
+    "max_difficulty": 2,
+    "include_tags": [
+      "mobility",
+      "stability"
+    ],
+    "exclude_tags": [
+      "power",
+      "conditioning"
+    ],
+    "allow_progressions": false,
+    "allow_regressions": true,
+    "max_repeats_per_workout": 1
+  }
+]

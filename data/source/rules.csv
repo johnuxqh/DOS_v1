@@ -1,0 +1,9 @@
+id,rule_type,name,description,applies_to,value,severity,status
+minimum_one_lower_body,composition,Minimum One Lower Body,Generated workouts should include at least one lower-body card.,workout,primary_category=lower_body,error,active
+minimum_one_upper_body,composition,Minimum One Upper Body,Generated workouts should include at least one upper-body card when equipment allows.,workout,primary_category=upper_body,warning,active
+minimum_one_core_or_stability,composition,Minimum One Core or Stability,Generated workouts should include at least one core or stability card.,workout,primary_category=core OR secondary_categories contains stability,warning,active
+maximum_two_plyometric_cards,safety,Maximum Two Plyometric Cards,Limit jump or high-impact power cards in a workout.,workout,max=2,error,active
+no_high_impact_for_beginner,safety,No High Impact for Beginner,Beginner workouts must not include high-impact exercises.,exercise,impact_level!=high,error,active
+include_pull_when_equipment_allows,balance,Include Pull When Equipment Allows,Prefer at least one pulling movement if bands weights or pull-up bar are available.,workout,movement_pattern=pull,warning,active
+avoid_duplicate_movement_pattern,variety,Avoid Duplicate Movement Pattern,Avoid repeated movement patterns unless the protocol intentionally repeats them.,workout,unique_movement_patterns,warning,active
+beginner_max_difficulty_3,safety,Beginner Max Difficulty 3,Beginner-safe exercises must have difficulty level three or below.,exercise,difficulty_level<=3,error,active
