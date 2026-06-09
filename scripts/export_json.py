@@ -27,11 +27,26 @@ ARRAY_FIELDS = {
         "coaching_notes",
         "safety_notes",
     },
+    "exercise_selection_rules": {
+        "allowed_movement_patterns",
+        "excluded_movement_patterns",
+        "required_equipment",
+        "excluded_equipment",
+        "include_tags",
+        "exclude_tags",
+    },
+    "workout_composition_rules": {
+        "allowed_movement_patterns",
+        "allowed_primary_categories",
+        "preferred_equipment",
+    },
 }
 BOOL_FIELDS = {
     "exercises": {"beginner_safe"},
     "protocols": {"allows_plyometrics", "requires_timer"},
     "workout_templates": {"tracking_enabled"},
+    "exercise_selection_rules": {"active", "allow_progressions", "allow_regressions"},
+    "workout_composition_rules": {"active", "fallback_allowed"},
 }
 INT_FIELDS = {
     "exercises": {
@@ -56,6 +71,18 @@ INT_FIELDS = {
         "rounds",
         "work_seconds",
         "rest_seconds",
+    },
+    "exercise_selection_rules": {
+        "priority",
+        "min_difficulty",
+        "max_difficulty",
+        "max_repeats_per_workout",
+    },
+    "workout_composition_rules": {
+        "slot_order",
+        "min_difficulty",
+        "max_difficulty",
+        "priority",
     },
 }
 
@@ -106,8 +133,12 @@ def records_from_csv(name: str) -> list[dict[str, Any]]:
             else:
                 record[key] = clean_scalar(value)
         records.append(record)
-    sort_key = "template_id" if name == "workout_templates" else "id"
+    if name == "workout_composition_rules":
+        return sorted(records, key=lambda item: (item["composition_id"], item["slot_order"]))
+    sort_keys = {"workout_templates": "template_id", "exercise_selection_rules": "rule_id"}
+    sort_key = sort_keys.get(name, "id")
     return sorted(records, key=lambda item: item[sort_key])
+
 
 def write_json(name: str, records: list[dict[str, Any]]) -> Path:
     EXPORT_DIR.mkdir(parents=True, exist_ok=True)
@@ -118,7 +149,7 @@ def write_json(name: str, records: list[dict[str, Any]]) -> Path:
 
 def export_all() -> list[Path]:
     outputs = []
-    for name in ("exercises", "protocols", "rules", "workout_templates"):
+    for name in ("exercises", "protocols", "rules", "workout_templates", "exercise_selection_rules", "workout_composition_rules"):
         outputs.append(write_json(name, records_from_csv(name)))
     return outputs
 

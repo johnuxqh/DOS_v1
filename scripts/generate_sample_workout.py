@@ -52,6 +52,167 @@ def equipment_from_deck(deck_id: str | None) -> str | None:
     return "bodyweight"
 
 
+def matching_selection_rules(
+    rules: list[dict[str, Any]],
+    template_id: str | None,
+    deck_id: str | None,
+) -> list[dict[str, Any]]:
+    matches: list[dict[str, Any]] = []
+    for rule in rules:
+        if not rule.get("active", False):
+            continue
+        rule_template_id = rule.get("applies_to_template_id", "")
+        rule_deck_id = rule.get("applies_to_deck_id", "")
+        if rule_template_id and rule_template_id != template_id:
+            continue
+        if rule_deck_id and rule_deck_id != deck_id:
+            continue
+        if rule_template_id or rule_deck_id:
+            matches.append(rule)
+    return sorted(matches, key=lambda item: item["priority"])
+
+
+def exercise_tags(exercise: dict[str, Any]) -> set[str]:
+    return {
+        exercise.get("movement_pattern", ""),
+        exercise.get("primary_category", ""),
+        exercise.get("equipment_group", ""),
+        exercise.get("impact_level", ""),
+        f"{exercise.get('impact_level', '')}_impact",
+        *exercise.get("secondary_categories", []),
+        *exercise.get("equipment", []),
+    } - {""}
+
+
+def exercise_passes_selection_rule(exercise: dict[str, Any], rule: dict[str, Any]) -> bool:
+    movement_pattern = exercise.get("movement_pattern", "")
+    equipment = set(exercise.get("equipment", []))
+    tags = exercise_tags(exercise)
+    difficulty = exercise.get("difficulty_level", 0)
+
+    allowed_patterns = set(rule.get("allowed_movement_patterns", []))
+    if allowed_patterns and movement_pattern not in allowed_patterns:
+        return False
+
+    excluded_patterns = set(rule.get("excluded_movement_patterns", []))
+    if excluded_patterns and movement_pattern in excluded_patterns:
+        return False
+
+    required_equipment = set(rule.get("required_equipment", []))
+    if required_equipment and not equipment.intersection(required_equipment):
+        return False
+
+    excluded_equipment = set(rule.get("excluded_equipment", []))
+    if excluded_equipment and equipment.intersection(excluded_equipment):
+        return False
+
+    min_difficulty = rule.get("min_difficulty", 0)
+    max_difficulty = rule.get("max_difficulty", 0)
+    if min_difficulty and difficulty < min_difficulty:
+        return False
+    if max_difficulty and difficulty > max_difficulty:
+        return False
+
+    include_tags = set(rule.get("include_tags", []))
+    if include_tags and not tags.intersection(include_tags):
+        return False
+
+    exclude_tags = set(rule.get("exclude_tags", []))
+    if exclude_tags and tags.intersection(exclude_tags):
+        return False
+
+    return True
+
+
+def apply_selection_rules(
+    exercises: list[dict[str, Any]],
+    rules: list[dict[str, Any]],
+    template_id: str | None = None,
+    deck_id: str | None = None,
+) -> list[dict[str, Any]]:
+    matching_rules = matching_selection_rules(rules, template_id, deck_id)
+    if not matching_rules:
+        return exercises
+    return [
+        exercise
+        for exercise in exercises
+        if all(exercise_passes_selection_rule(exercise, rule) for rule in matching_rules)
+    ]
+
+
+def matching_composition_rules(
+    rules: list[dict[str, Any]],
+    template_id: str | None,
+    protocol_type: str | None,
+) -> list[dict[str, Any]]:
+    matches = [
+        rule
+        for rule in rules
+        if rule.get("active", False)
+        and (not rule.get("applies_to_template_id") or rule["applies_to_template_id"] == template_id)
+        and (not rule.get("applies_to_protocol_type") or rule["applies_to_protocol_type"] == protocol_type)
+    ]
+    return sorted(matches, key=lambda item: (item["slot_order"], item["priority"]))
+
+
+def exercise_matches_composition_slot(exercise: dict[str, Any], slot: dict[str, Any]) -> bool:
+    movement_pattern = exercise.get("movement_pattern", "")
+    primary_category = exercise.get("primary_category", "")
+    difficulty = exercise.get("difficulty_level", 0)
+
+    if slot.get("required_movement_pattern") and movement_pattern != slot["required_movement_pattern"]:
+        return False
+    allowed_patterns = set(slot.get("allowed_movement_patterns", []))
+    if allowed_patterns and movement_pattern not in allowed_patterns:
+        return False
+    if slot.get("required_primary_category") and primary_category != slot["required_primary_category"]:
+        return False
+    allowed_categories = set(slot.get("allowed_primary_categories", []))
+    if allowed_categories and primary_category not in allowed_categories:
+        return False
+    if slot.get("min_difficulty", 0) and difficulty < slot["min_difficulty"]:
+        return False
+    if slot.get("max_difficulty", 0) and difficulty > slot["max_difficulty"]:
+        return False
+    return True
+
+
+def composition_candidate_sort_key(exercise: dict[str, Any], slot: dict[str, Any]) -> tuple[int, int, str]:
+    preferred_equipment = set(slot.get("preferred_equipment", []))
+    has_preferred_equipment = bool(set(exercise.get("equipment", [])).intersection(preferred_equipment))
+    return (0 if has_preferred_equipment else 1, exercise.get("difficulty_level", 0), exercise["id"])
+
+
+def compose_workout(
+    eligible_exercises: list[dict[str, Any]],
+    composition_rules: list[dict[str, Any]],
+    template_id: str | None,
+    protocol_type: str | None,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    slots = matching_composition_rules(composition_rules, template_id, protocol_type)
+    if not slots:
+        return [], []
+
+    selected: list[dict[str, Any]] = []
+    filled_slots: list[dict[str, Any]] = []
+    selected_ids: set[str] = set()
+    for slot in slots:
+        remaining = [exercise for exercise in eligible_exercises if exercise["id"] not in selected_ids]
+        strict_matches = [exercise for exercise in remaining if exercise_matches_composition_slot(exercise, slot)]
+        candidates = strict_matches
+        used_fallback = False
+        if not candidates and slot.get("fallback_allowed", False):
+            candidates = remaining
+            used_fallback = True
+        if not candidates:
+            continue
+        choice = sorted(candidates, key=lambda exercise: composition_candidate_sort_key(exercise, slot))[0]
+        selected.append(choice)
+        selected_ids.add(choice["id"])
+        filled_slots.append({"slot_order": slot["slot_order"], "slot_name": slot["slot_name"], "exercise_id": choice["id"], "used_fallback": used_fallback})
+    return selected, filled_slots
+
+
 def equipment_matches(exercise: dict[str, Any], requested: str | list[str]) -> bool:
     requested_items = [requested] if isinstance(requested, str) else requested
     equipment = set(exercise.get("equipment", []))
@@ -96,20 +257,34 @@ def exercise_matches_focus(exercise: dict[str, Any], movement_focus: list[str] |
     return bool(categories.intersection(movement_focus)) or exercise.get("movement_pattern") in movement_focus
 
 
-def select_exercises(
+def eligible_exercises(
     exercises: list[dict[str, Any]],
     equipment: str | list[str],
-    count: int,
-    movement_focus: list[str] | None = None,
+    selection_rules: list[dict[str, Any]] | None = None,
+    template_id: str | None = None,
+    deck_id: str | None = None,
 ) -> list[dict[str, Any]]:
     equipment_candidates = [
         exercise
         for exercise in exercises
         if exercise.get("status") == "active" and equipment_matches(exercise, equipment)
     ]
-    candidates = [exercise for exercise in equipment_candidates if exercise_matches_focus(exercise, movement_focus)]
+    return apply_selection_rules(equipment_candidates, selection_rules or [], template_id, deck_id)
+
+
+def select_exercises(
+    exercises: list[dict[str, Any]],
+    equipment: str | list[str],
+    count: int,
+    movement_focus: list[str] | None = None,
+    selection_rules: list[dict[str, Any]] | None = None,
+    template_id: str | None = None,
+    deck_id: str | None = None,
+) -> list[dict[str, Any]]:
+    rule_filtered_candidates = eligible_exercises(exercises, equipment, selection_rules, template_id, deck_id)
+    candidates = [exercise for exercise in rule_filtered_candidates if exercise_matches_focus(exercise, movement_focus)]
     if len(candidates) < count:
-        candidates.extend(exercise for exercise in equipment_candidates if exercise not in candidates)
+        candidates.extend(exercise for exercise in rule_filtered_candidates if exercise not in candidates)
     if not candidates:
         raise ValueError(f"No active exercises matched equipment '{equipment}'.")
 
@@ -152,21 +327,48 @@ def build_workout(
     movement_focus = None
     validate_deck(deck_id)
 
+    selection_rules: list[dict[str, Any]] = []
+    composition_rules: list[dict[str, Any]] = []
     if template_id:
         template = select_template(load_records("workout_templates"), template_id)
         protocol = protocol_from_template(template)
         deck_id = deck_id or template.get("deck_id")
         equipment_filter: str | list[str] = equipment or template["equipment_required"]
         movement_focus = template.get("movement_focus", [])
+        selection_rules = load_records("exercise_selection_rules")
+        composition_rules = load_records("workout_composition_rules")
     else:
         protocols = load_records("protocols")
         protocol = select_protocol(protocols, time, protocol_id)
         equipment_filter = equipment or equipment_from_deck(deck_id) or "bodyweight"
 
-    cards = select_exercises(exercises, equipment_filter, protocol["cards_to_draw"], movement_focus)
+    composition_slots: list[dict[str, Any]] = []
+    if template:
+        eligible = eligible_exercises(exercises, equipment_filter, selection_rules, template_id, deck_id)
+        cards, composition_slots = compose_workout(eligible, composition_rules, template_id, template["protocol_type"])
+    else:
+        cards = []
+
+    if not cards:
+        cards = select_exercises(
+            exercises,
+            equipment_filter,
+            protocol["cards_to_draw"],
+            movement_focus,
+            selection_rules,
+            template_id,
+            deck_id,
+        )
     if not cards:
         raise ValueError("Could not select any cards for the sample workout.")
-    return {"protocol": protocol, "cards": cards, "equipment": equipment_filter, "template": template, "deck_id": deck_id}
+    return {
+        "protocol": protocol,
+        "cards": cards,
+        "equipment": equipment_filter,
+        "template": template,
+        "deck_id": deck_id,
+        "composition_slots": composition_slots,
+    }
 
 
 def format_workout(workout: dict[str, Any]) -> str:

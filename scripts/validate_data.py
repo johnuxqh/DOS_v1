@@ -47,6 +47,18 @@ REQUIRED_COLUMNS = {
         "rounds", "work_seconds", "rest_seconds", "target_intensity", "equipment_required", "movement_focus",
         "scoring_method", "tracking_enabled", "coaching_notes", "safety_notes",
     ],
+    "exercise_selection_rules": [
+        "rule_id", "rule_name", "description", "active", "priority", "applies_to_template_id", "applies_to_deck_id",
+        "allowed_movement_patterns", "excluded_movement_patterns", "required_equipment", "excluded_equipment",
+        "min_difficulty", "max_difficulty", "include_tags", "exclude_tags", "allow_progressions", "allow_regressions",
+        "max_repeats_per_workout",
+    ],
+    "workout_composition_rules": [
+        "composition_id", "composition_name", "description", "active", "applies_to_template_id",
+        "applies_to_protocol_type", "slot_order", "slot_name", "required_movement_pattern", "allowed_movement_patterns",
+        "required_primary_category", "allowed_primary_categories", "min_difficulty", "max_difficulty",
+        "preferred_equipment", "fallback_allowed", "priority",
+    ],
 }
 
 ENUMS = {
@@ -68,6 +80,16 @@ ENUMS = {
         "tier": {"free", "plus", "pro"},
         "protocol_type": {"amrap", "emom", "circuit", "ladder", "mobility_flow", "tabata", "chipper", "density"},
         "tracking_enabled": {"TRUE", "FALSE"},
+    },
+    "exercise_selection_rules": {
+        "active": {"TRUE", "FALSE"},
+        "allow_progressions": {"TRUE", "FALSE"},
+        "allow_regressions": {"TRUE", "FALSE"},
+    },
+    "workout_composition_rules": {
+        "active": {"TRUE", "FALSE"},
+        "fallback_allowed": {"TRUE", "FALSE"},
+        "applies_to_protocol_type": {"amrap", "emom", "circuit", "ladder", "mobility_flow", "tabata", "chipper", "density"},
     },
 }
 
@@ -91,6 +113,18 @@ RANGES = {
         "rounds": (1, 99),
         "work_seconds": (0, 3600),
         "rest_seconds": (0, 3600),
+    },
+    "exercise_selection_rules": {
+        "priority": (1, 1000),
+        "min_difficulty": (0, 5),
+        "max_difficulty": (0, 5),
+        "max_repeats_per_workout": (1, 99),
+    },
+    "workout_composition_rules": {
+        "slot_order": (1, 99),
+        "min_difficulty": (0, 5),
+        "max_difficulty": (0, 5),
+        "priority": (1, 1000),
     },
 }
 
@@ -116,7 +150,13 @@ def validate_required_columns(name: str, columns: list[str]) -> list[str]:
 
 
 def record_id_field(name: str) -> str:
-    return "template_id" if name == "workout_templates" else "id"
+    if name == "workout_templates":
+        return "template_id"
+    if name == "exercise_selection_rules":
+        return "rule_id"
+    if name == "workout_composition_rules":
+        return "composition_id"
+    return "id"
 
 
 def validate_ids(name: str, rows: list[dict[str, str]]) -> list[str]:
@@ -125,9 +165,15 @@ def validate_ids(name: str, rows: list[dict[str, str]]) -> list[str]:
     id_field = record_id_field(name)
     for row in rows:
         item = row.get(id_field, "")
-        unique_key = f"{row.get('type', '')}:{item}" if name == "taxonomy" else item
+        if name == "taxonomy":
+            unique_key = f"{row.get('type', '')}:{item}"
+        elif name == "workout_composition_rules":
+            unique_key = f"{item}:{row.get('slot_order', '')}"
+        else:
+            unique_key = item
         if unique_key in seen:
-            errors.append(f"{name}: duplicate {id_field} '{item}'")
+            suffix = f" + slot_order '{row.get('slot_order', '')}'" if name == "workout_composition_rules" else ""
+            errors.append(f"{name}: duplicate {id_field} '{item}'{suffix}")
         seen.add(unique_key)
         if not re.match(r"^[a-z][a-z0-9_]*$", item):
             errors.append(f"{name}: {id_field} '{item}' must be lowercase snake_case")
@@ -221,6 +267,10 @@ def validate_schema(name: str, records: list[dict[str, Any]]) -> list[str]:
         schema_path = SCHEMA_DIR / "rule.schema.json"
     if name == "workout_templates":
         schema_path = SCHEMA_DIR / "workout_template.schema.json"
+    if name == "exercise_selection_rules":
+        schema_path = SCHEMA_DIR / "exercise_selection_rule.schema.json"
+    if name == "workout_composition_rules":
+        schema_path = SCHEMA_DIR / "workout_composition_rule.schema.json"
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
     validator = JsonSchemaValidator(schema) if JsonSchemaValidator else SimpleSchemaValidator(schema)
     errors: list[str] = []
@@ -285,6 +335,44 @@ def validate_workout_template_business_rules(records: list[dict[str, Any]], deck
     return errors
 
 
+def template_ids_from_records(records: list[dict[str, Any]]) -> set[str]:
+    return {record["template_id"] for record in records}
+
+
+def validate_exercise_selection_rule_business_rules(
+    records: list[dict[str, Any]],
+    template_ids: set[str],
+    deck_ids: set[str],
+) -> list[str]:
+    errors: list[str] = []
+    for record in records:
+        rule_id = record["rule_id"]
+        template_id = record.get("applies_to_template_id", "")
+        deck_id = record.get("applies_to_deck_id", "")
+        if template_id and template_id not in template_ids:
+            errors.append(f"exercise_selection_rules: rule '{rule_id}' references unknown template_id '{template_id}'")
+        if deck_id and deck_id not in deck_ids:
+            errors.append(f"exercise_selection_rules: rule '{rule_id}' references unknown deck_id '{deck_id}'")
+        if record["min_difficulty"] and record["max_difficulty"] and record["min_difficulty"] > record["max_difficulty"]:
+            errors.append(f"exercise_selection_rules: rule '{rule_id}' min_difficulty cannot exceed max_difficulty")
+    return errors
+
+
+def validate_workout_composition_rule_business_rules(
+    records: list[dict[str, Any]],
+    template_ids: set[str],
+) -> list[str]:
+    errors: list[str] = []
+    for record in records:
+        composition_id = record["composition_id"]
+        template_id = record.get("applies_to_template_id", "")
+        if template_id and template_id not in template_ids:
+            errors.append(f"workout_composition_rules: composition '{composition_id}' references unknown template_id '{template_id}'")
+        if record["min_difficulty"] and record["max_difficulty"] and record["min_difficulty"] > record["max_difficulty"]:
+            errors.append(f"workout_composition_rules: composition '{composition_id}' slot {record['slot_order']} min_difficulty cannot exceed max_difficulty")
+    return errors
+
+
 def run_validation() -> list[str]:
     errors: list[str] = []
     taxonomy_rows: list[dict[str, str]] = []
@@ -303,13 +391,15 @@ def run_validation() -> list[str]:
             taxonomy_rows = rows
 
     deck_ids = deck_ids_from_taxonomy_rows(taxonomy_rows)
+    converted_records: dict[str, list[dict[str, Any]]] = {}
 
-    for name in ("exercises", "protocols", "rules", "workout_templates"):
+    for name in ("exercises", "protocols", "rules", "workout_templates", "exercise_selection_rules", "workout_composition_rules"):
         try:
             records = records_from_csv(name)
         except Exception as exc:  # noqa: BLE001 - validation should report conversion failures clearly.
             errors.append(f"{name}: failed to convert CSV to JSON objects: {exc}")
             continue
+        converted_records[name] = records
         errors.extend(validate_schema(name, records))
         if name == "exercises":
             errors.extend(validate_exercise_business_rules(records))
@@ -317,6 +407,23 @@ def run_validation() -> list[str]:
             errors.extend(validate_protocol_business_rules(records))
         if name == "workout_templates":
             errors.extend(validate_workout_template_business_rules(records, deck_ids))
+
+    template_ids = template_ids_from_records(converted_records.get("workout_templates", []))
+    if "exercise_selection_rules" in converted_records:
+        errors.extend(
+            validate_exercise_selection_rule_business_rules(
+                converted_records["exercise_selection_rules"],
+                template_ids,
+                deck_ids,
+            )
+        )
+    if "workout_composition_rules" in converted_records:
+        errors.extend(
+            validate_workout_composition_rule_business_rules(
+                converted_records["workout_composition_rules"],
+                template_ids,
+            )
+        )
     return errors
 
 
