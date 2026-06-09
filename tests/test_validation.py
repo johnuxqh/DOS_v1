@@ -4,7 +4,14 @@ import json
 from pathlib import Path
 
 from scripts.export_json import export_all, records_from_csv
-from scripts.generate_sample_workout import apply_selection_rules, build_workout, compose_workout
+from scripts.generate_sample_workout import (
+    apply_selection_rules,
+    build_workout,
+    compose_workout,
+    format_workout,
+    get_progressions,
+    get_regressions,
+)
 from scripts.validate_data import (
     REQUIRED_COLUMNS,
     validate_enums,
@@ -13,6 +20,7 @@ from scripts.validate_data import (
     validate_workout_template_business_rules,
     validate_exercise_selection_rule_business_rules,
     validate_workout_composition_rule_business_rules,
+    validate_exercise_progression_business_rules,
     run_validation,
 )
 
@@ -29,12 +37,14 @@ def test_required_files_exist() -> None:
         "data/source/workout_templates.csv",
         "data/source/exercise_selection_rules.csv",
         "data/source/workout_composition_rules.csv",
+        "data/source/exercise_progressions.csv",
         "data/schemas/exercise.schema.json",
         "data/schemas/protocol.schema.json",
         "data/schemas/rule.schema.json",
         "data/schemas/workout_template.schema.json",
         "data/schemas/exercise_selection_rule.schema.json",
         "data/schemas/workout_composition_rule.schema.json",
+        "data/schemas/exercise_progression.schema.json",
     ]
     for file_path in required_files:
         assert (ROOT / file_path).exists(), file_path
@@ -66,7 +76,7 @@ def test_export_json_creates_json_files() -> None:
 
 def test_generated_json_is_schema_valid() -> None:
     export_all()
-    for export_name in ("exercises", "protocols", "rules", "workout_templates", "exercise_selection_rules", "workout_composition_rules"):
+    for export_name in ("exercises", "protocols", "rules", "workout_templates", "exercise_selection_rules", "workout_composition_rules", "exercise_progressions"):
         records = json.loads((ROOT / "data" / "exports" / f"{export_name}.json").read_text(encoding="utf-8"))
         assert validate_schema(export_name, records) == []
 
@@ -208,6 +218,64 @@ def test_no_composition_rules_preserves_existing_behavior() -> None:
     cards, slots = compose_workout(exercises, [], "unknown_template", "circuit")
     assert cards == []
     assert slots == []
+
+
+def test_exercise_progression_records_are_valid() -> None:
+    progressions = records_from_csv("exercise_progressions")
+    assert progressions
+    assert validate_schema("exercise_progressions", progressions) == []
+
+
+def test_invalid_progression_exercise_reference_is_reported() -> None:
+    record = records_from_csv("exercise_progressions")[0] | {"exercise_id": "missing_exercise"}
+    errors = validate_exercise_progression_business_rules([record], {"air_squat", "dumbbell_goblet_squat"})
+    assert any("unknown exercise_id" in error for error in errors)
+
+
+def test_invalid_progression_related_exercise_reference_is_reported() -> None:
+    record = records_from_csv("exercise_progressions")[0] | {"related_exercise_id": "missing_exercise"}
+    errors = validate_exercise_progression_business_rules([record], {"air_squat"})
+    assert any("unknown related_exercise_id" in error for error in errors)
+
+
+def test_invalid_progression_relationship_type_is_reported() -> None:
+    row = {"relationship_type": "upgrade"}
+    errors = validate_enums("exercise_progressions", [row])
+    assert any("relationship_type" in error for error in errors)
+
+
+def test_invalid_progression_type_is_reported() -> None:
+    row = {"progression_type": "magic"}
+    errors = validate_enums("exercise_progressions", [row])
+    assert any("progression_type" in error for error in errors)
+
+
+def test_progression_self_reference_is_rejected() -> None:
+    record = records_from_csv("exercise_progressions")[0] | {"exercise_id": "air_squat", "related_exercise_id": "air_squat"}
+    errors = validate_exercise_progression_business_rules([record], {"air_squat"})
+    assert any("cannot self-reference" in error for error in errors)
+
+
+def test_get_progressions_returns_harder_options() -> None:
+    records = records_from_csv("exercise_progressions")
+    progressions = get_progressions("air_squat", records)
+    assert progressions
+    assert all(record["relationship_type"] == "progression" and record["difficulty_delta"] > 0 for record in progressions)
+
+
+def test_get_regressions_returns_easier_options() -> None:
+    records = records_from_csv("exercise_progressions")
+    regressions = get_regressions("dumbbell_goblet_squat", records)
+    assert regressions
+    assert all(record["relationship_type"] == "regression" and record["difficulty_delta"] < 0 for record in regressions)
+
+
+def test_show_progressions_does_not_break_sample_generation() -> None:
+    export_all()
+    workout = build_workout(equipment=None, template_id="beginner_full_body")
+    output = format_workout(workout, show_progressions=True)
+    assert "DECK OF SWEAT SAMPLE WORKOUT" in output
+    assert "Progression:" in output
 
 
 def test_sample_workout_generation_returns_cards() -> None:

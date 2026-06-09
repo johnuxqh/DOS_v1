@@ -59,6 +59,10 @@ REQUIRED_COLUMNS = {
         "required_primary_category", "allowed_primary_categories", "min_difficulty", "max_difficulty",
         "preferred_equipment", "fallback_allowed", "priority",
     ],
+    "exercise_progressions": [
+        "progression_id", "exercise_id", "related_exercise_id", "relationship_type", "progression_type",
+        "difficulty_delta", "active", "coaching_notes", "safety_notes",
+    ],
 }
 
 ENUMS = {
@@ -90,6 +94,11 @@ ENUMS = {
         "active": {"TRUE", "FALSE"},
         "fallback_allowed": {"TRUE", "FALSE"},
         "applies_to_protocol_type": {"amrap", "emom", "circuit", "ladder", "mobility_flow", "tabata", "chipper", "density"},
+    },
+    "exercise_progressions": {
+        "active": {"TRUE", "FALSE"},
+        "relationship_type": {"progression", "regression", "lateral_variation"},
+        "progression_type": {"load", "volume", "tempo", "complexity", "range_of_motion", "stability", "impact", "equipment", "skill"},
     },
 }
 
@@ -126,6 +135,7 @@ RANGES = {
         "max_difficulty": (0, 5),
         "priority": (1, 1000),
     },
+    "exercise_progressions": {"difficulty_delta": (-5, 5)},
 }
 
 
@@ -156,6 +166,8 @@ def record_id_field(name: str) -> str:
         return "rule_id"
     if name == "workout_composition_rules":
         return "composition_id"
+    if name == "exercise_progressions":
+        return "progression_id"
     return "id"
 
 
@@ -271,6 +283,8 @@ def validate_schema(name: str, records: list[dict[str, Any]]) -> list[str]:
         schema_path = SCHEMA_DIR / "exercise_selection_rule.schema.json"
     if name == "workout_composition_rules":
         schema_path = SCHEMA_DIR / "workout_composition_rule.schema.json"
+    if name == "exercise_progressions":
+        schema_path = SCHEMA_DIR / "exercise_progression.schema.json"
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
     validator = JsonSchemaValidator(schema) if JsonSchemaValidator else SimpleSchemaValidator(schema)
     errors: list[str] = []
@@ -373,6 +387,24 @@ def validate_workout_composition_rule_business_rules(
     return errors
 
 
+def validate_exercise_progression_business_rules(
+    records: list[dict[str, Any]],
+    exercise_ids: set[str],
+) -> list[str]:
+    errors: list[str] = []
+    for record in records:
+        progression_id = record["progression_id"]
+        exercise_id = record["exercise_id"]
+        related_exercise_id = record["related_exercise_id"]
+        if exercise_id not in exercise_ids:
+            errors.append(f"exercise_progressions: progression '{progression_id}' references unknown exercise_id '{exercise_id}'")
+        if related_exercise_id not in exercise_ids:
+            errors.append(f"exercise_progressions: progression '{progression_id}' references unknown related_exercise_id '{related_exercise_id}'")
+        if exercise_id == related_exercise_id:
+            errors.append(f"exercise_progressions: progression '{progression_id}' cannot self-reference exercise '{exercise_id}'")
+    return errors
+
+
 def run_validation() -> list[str]:
     errors: list[str] = []
     taxonomy_rows: list[dict[str, str]] = []
@@ -393,7 +425,7 @@ def run_validation() -> list[str]:
     deck_ids = deck_ids_from_taxonomy_rows(taxonomy_rows)
     converted_records: dict[str, list[dict[str, Any]]] = {}
 
-    for name in ("exercises", "protocols", "rules", "workout_templates", "exercise_selection_rules", "workout_composition_rules"):
+    for name in ("exercises", "protocols", "rules", "workout_templates", "exercise_selection_rules", "workout_composition_rules", "exercise_progressions"):
         try:
             records = records_from_csv(name)
         except Exception as exc:  # noqa: BLE001 - validation should report conversion failures clearly.
@@ -424,6 +456,9 @@ def run_validation() -> list[str]:
                 template_ids,
             )
         )
+    if "exercise_progressions" in converted_records:
+        exercise_ids = {record["id"] for record in converted_records.get("exercises", [])}
+        errors.extend(validate_exercise_progression_business_rules(converted_records["exercise_progressions"], exercise_ids))
     return errors
 
 

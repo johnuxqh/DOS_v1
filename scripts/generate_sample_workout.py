@@ -23,6 +23,47 @@ def load_records(name: str) -> list[dict[str, Any]]:
     return records_from_csv(name)
 
 
+def get_related_exercises(
+    exercise_id: str,
+    relationship_type: str,
+    progression_records: list[dict[str, Any]] | None = None,
+) -> list[dict[str, Any]]:
+    records = progression_records if progression_records is not None else load_records("exercise_progressions")
+    return sorted(
+        [
+            record
+            for record in records
+            if record.get("active", False)
+            and record.get("exercise_id") == exercise_id
+            and record.get("relationship_type") == relationship_type
+        ],
+        key=lambda item: (item["difficulty_delta"], item["related_exercise_id"]),
+    )
+
+
+def get_progressions(
+    exercise_id: str,
+    progression_records: list[dict[str, Any]] | None = None,
+) -> list[dict[str, Any]]:
+    return get_related_exercises(exercise_id, "progression", progression_records)
+
+
+def get_regressions(
+    exercise_id: str,
+    progression_records: list[dict[str, Any]] | None = None,
+) -> list[dict[str, Any]]:
+    return get_related_exercises(exercise_id, "regression", progression_records)
+
+
+def suggest_related_exercise(
+    exercise_id: str,
+    relationship_type: str,
+    progression_records: list[dict[str, Any]] | None = None,
+) -> dict[str, Any] | None:
+    related = get_related_exercises(exercise_id, relationship_type, progression_records)
+    return related[0] if related else None
+
+
 def active_deck_ids() -> set[str]:
     return {
         row["id"]
@@ -371,8 +412,10 @@ def build_workout(
     }
 
 
-def format_workout(workout: dict[str, Any]) -> str:
+def format_workout(workout: dict[str, Any], show_progressions: bool = False) -> str:
     protocol = workout["protocol"]
+    exercise_names = {exercise["id"]: exercise["display_name"] for exercise in load_records("exercises")}
+    progression_records = load_records("exercise_progressions") if show_progressions else []
     lines = [
         "DECK OF SWEAT SAMPLE WORKOUT",
         f"Time: {protocol['time_minutes']} minutes",
@@ -386,6 +429,15 @@ def format_workout(workout: dict[str, Any]) -> str:
     ]
     for index, exercise in enumerate(workout["cards"], start=1):
         lines.append(f"{index}. {exercise['display_name']} — {card_prescription(exercise)}")
+        if show_progressions:
+            progression = suggest_related_exercise(exercise["id"], "progression", progression_records)
+            regression = suggest_related_exercise(exercise["id"], "regression", progression_records)
+            if progression:
+                name = exercise_names.get(progression["related_exercise_id"], progression["related_exercise_id"])
+                lines.append(f"   Progression: {name} ({progression['progression_type']})")
+            if regression:
+                name = exercise_names.get(regression["related_exercise_id"], regression["related_exercise_id"])
+                lines.append(f"   Regression: {name} ({regression['progression_type']})")
     return "\n".join(lines)
 
 
@@ -396,12 +448,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--protocol", dest="protocol_id", help="Specific protocol id, e.g. amrap_10.")
     parser.add_argument("--template", dest="template_id", help="Workout template id, e.g. beginner_full_body or emom_12.")
     parser.add_argument("--deck", dest="deck_id", help="Deck id, e.g. free_bodyweight_starter.")
+    parser.add_argument("--show-progressions", action="store_true", help="Show deterministic progression and regression hints.")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    print(format_workout(build_workout(args.equipment, args.time, args.protocol_id, args.template_id, args.deck_id)))
+    workout = build_workout(args.equipment, args.time, args.protocol_id, args.template_id, args.deck_id)
+    print(format_workout(workout, show_progressions=args.show_progressions))
 
 
 if __name__ == "__main__":

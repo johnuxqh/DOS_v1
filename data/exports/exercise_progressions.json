@@ -1,0 +1,134 @@
+[
+  {
+    "progression_id": "air_squat_to_dumbbell_goblet_squat",
+    "exercise_id": "air_squat",
+    "related_exercise_id": "dumbbell_goblet_squat",
+    "relationship_type": "progression",
+    "progression_type": "load",
+    "difficulty_delta": 1,
+    "active": true,
+    "coaching_notes": "Add load only while squat mechanics remain controlled.",
+    "safety_notes": "Keep the dumbbell close and use pain-free depth."
+  },
+  {
+    "progression_id": "band_row_to_dumbbell_row",
+    "exercise_id": "band_row",
+    "related_exercise_id": "dumbbell_row",
+    "relationship_type": "progression",
+    "progression_type": "load",
+    "difficulty_delta": 1,
+    "active": true,
+    "coaching_notes": "Progress to a controlled dumbbell row when band rows are repeatable.",
+    "safety_notes": "Support the torso and avoid twisting."
+  },
+  {
+    "progression_id": "barbell_rdl_to_dumbbell_rdl",
+    "exercise_id": "barbell_romanian_deadlift",
+    "related_exercise_id": "dumbbell_romanian_deadlift",
+    "relationship_type": "regression",
+    "progression_type": "load",
+    "difficulty_delta": -1,
+    "active": true,
+    "coaching_notes": "Use dumbbells to simplify setup and reduce load.",
+    "safety_notes": "Maintain a neutral spine and controlled range."
+  },
+  {
+    "progression_id": "dead_bug_to_side_plank",
+    "exercise_id": "dead_bug",
+    "related_exercise_id": "side_plank",
+    "relationship_type": "progression",
+    "progression_type": "stability",
+    "difficulty_delta": 1,
+    "active": true,
+    "coaching_notes": "Progress to a side plank for greater anti-rotation demand.",
+    "safety_notes": "Use a knees-down side plank if needed."
+  },
+  {
+    "progression_id": "dumbbell_goblet_squat_to_air_squat",
+    "exercise_id": "dumbbell_goblet_squat",
+    "related_exercise_id": "air_squat",
+    "relationship_type": "regression",
+    "progression_type": "load",
+    "difficulty_delta": -1,
+    "active": true,
+    "coaching_notes": "Remove external load while preserving squat pattern.",
+    "safety_notes": "Use a box target if additional control is needed."
+  },
+  {
+    "progression_id": "dumbbell_goblet_to_kettlebell_goblet",
+    "exercise_id": "dumbbell_goblet_squat",
+    "related_exercise_id": "kettlebell_goblet_squat",
+    "relationship_type": "lateral_variation",
+    "progression_type": "equipment",
+    "difficulty_delta": 0,
+    "active": true,
+    "coaching_notes": "Swap implements while preserving the same squat pattern.",
+    "safety_notes": "Choose an implement you can hold securely."
+  },
+  {
+    "progression_id": "dumbbell_rdl_to_barbell_rdl",
+    "exercise_id": "dumbbell_romanian_deadlift",
+    "related_exercise_id": "barbell_romanian_deadlift",
+    "relationship_type": "progression",
+    "progression_type": "load",
+    "difficulty_delta": 1,
+    "active": true,
+    "coaching_notes": "Progress to the barbell only with a consistent hip hinge.",
+    "safety_notes": "Use conservative load and keep the bar close."
+  },
+  {
+    "progression_id": "dumbbell_row_to_band_row",
+    "exercise_id": "dumbbell_row",
+    "related_exercise_id": "band_row",
+    "relationship_type": "regression",
+    "progression_type": "equipment",
+    "difficulty_delta": -1,
+    "active": true,
+    "coaching_notes": "Use a band to reduce loading and simplify setup.",
+    "safety_notes": "Anchor the band securely."
+  },
+  {
+    "progression_id": "kettlebell_deadlift_to_kettlebell_swing",
+    "exercise_id": "kettlebell_deadlift",
+    "related_exercise_id": "kettlebell_swing",
+    "relationship_type": "progression",
+    "progression_type": "complexity",
+    "difficulty_delta": 2,
+    "active": true,
+    "coaching_notes": "Progress only after the hinge is consistent and powerful.",
+    "safety_notes": "Learn swing technique before adding speed or fatigue."
+  },
+  {
+    "progression_id": "kettlebell_goblet_to_dumbbell_goblet",
+    "exercise_id": "kettlebell_goblet_squat",
+    "related_exercise_id": "dumbbell_goblet_squat",
+    "relationship_type": "lateral_variation",
+    "progression_type": "equipment",
+    "difficulty_delta": 0,
+    "active": true,
+    "coaching_notes": "Swap implements while preserving the same squat pattern.",
+    "safety_notes": "Choose an implement you can hold securely."
+  },
+  {
+    "progression_id": "kettlebell_swing_to_kettlebell_deadlift",
+    "exercise_id": "kettlebell_swing",
+    "related_exercise_id": "kettlebell_deadlift",
+    "relationship_type": "regression",
+    "progression_type": "complexity",
+    "difficulty_delta": -2,
+    "active": true,
+    "coaching_notes": "Return to a controlled deadlift to practice the hinge.",
+    "safety_notes": "Stop if the back rounds or pain appears."
+  },
+  {
+    "progression_id": "side_plank_to_dead_bug",
+    "exercise_id": "side_plank",
+    "related_exercise_id": "dead_bug",
+    "relationship_type": "regression",
+    "progression_type": "stability",
+    "difficulty_delta": -1,
+    "active": true,
+    "coaching_notes": "Use dead bugs to practice trunk control with more support.",
+    "safety_notes": "Reduce limb range if the low back arches."
+  }
+]

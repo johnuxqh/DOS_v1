@@ -47,6 +47,7 @@ BOOL_FIELDS = {
     "workout_templates": {"tracking_enabled"},
     "exercise_selection_rules": {"active", "allow_progressions", "allow_regressions"},
     "workout_composition_rules": {"active", "fallback_allowed"},
+    "exercise_progressions": {"active"},
 }
 INT_FIELDS = {
     "exercises": {
@@ -84,6 +85,7 @@ INT_FIELDS = {
         "max_difficulty",
         "priority",
     },
+    "exercise_progressions": {"difficulty_delta"},
 }
 
 
@@ -135,7 +137,7 @@ def records_from_csv(name: str) -> list[dict[str, Any]]:
         records.append(record)
     if name == "workout_composition_rules":
         return sorted(records, key=lambda item: (item["composition_id"], item["slot_order"]))
-    sort_keys = {"workout_templates": "template_id", "exercise_selection_rules": "rule_id"}
+    sort_keys = {"workout_templates": "template_id", "exercise_selection_rules": "rule_id", "exercise_progressions": "progression_id"}
     sort_key = sort_keys.get(name, "id")
     return sorted(records, key=lambda item: item[sort_key])
 
@@ -149,7 +151,7 @@ def write_json(name: str, records: list[dict[str, Any]]) -> Path:
 
 def export_all() -> list[Path]:
     outputs = []
-    for name in ("exercises", "protocols", "rules", "workout_templates", "exercise_selection_rules", "workout_composition_rules"):
+    for name in ("exercises", "protocols", "rules", "workout_templates", "exercise_selection_rules", "workout_composition_rules", "exercise_progressions"):
         outputs.append(write_json(name, records_from_csv(name)))
     return outputs
 
