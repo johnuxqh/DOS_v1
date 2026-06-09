@@ -12,6 +12,12 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from scripts.adapt_workout import (
+    load_workout_history,
+    recent_exercise_ids,
+    should_suggest_progression,
+    should_suggest_regression,
+)
 from scripts.export_json import records_from_csv
 EXPORT_DIR = ROOT / "data" / "exports"
 
@@ -218,10 +224,10 @@ def exercise_matches_composition_slot(exercise: dict[str, Any], slot: dict[str, 
     return True
 
 
-def composition_candidate_sort_key(exercise: dict[str, Any], slot: dict[str, Any]) -> tuple[int, int, str]:
+def composition_candidate_sort_key(exercise: dict[str, Any], slot: dict[str, Any], avoided_ids: set[str] | None = None) -> tuple[int, int, int, str]:
     preferred_equipment = set(slot.get("preferred_equipment", []))
     has_preferred_equipment = bool(set(exercise.get("equipment", [])).intersection(preferred_equipment))
-    return (0 if has_preferred_equipment else 1, exercise.get("difficulty_level", 0), exercise["id"])
+    return (1 if exercise["id"] in (avoided_ids or set()) else 0, 0 if has_preferred_equipment else 1, exercise.get("difficulty_level", 0), exercise["id"])
 
 
 def compose_workout(
@@ -229,6 +235,7 @@ def compose_workout(
     composition_rules: list[dict[str, Any]],
     template_id: str | None,
     protocol_type: str | None,
+    avoided_ids: set[str] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     slots = matching_composition_rules(composition_rules, template_id, protocol_type)
     if not slots:
@@ -247,7 +254,7 @@ def compose_workout(
             used_fallback = True
         if not candidates:
             continue
-        choice = sorted(candidates, key=lambda exercise: composition_candidate_sort_key(exercise, slot))[0]
+        choice = sorted(candidates, key=lambda exercise: composition_candidate_sort_key(exercise, slot, avoided_ids))[0]
         selected.append(choice)
         selected_ids.add(choice["id"])
         filled_slots.append({"slot_order": slot["slot_order"], "slot_name": slot["slot_name"], "exercise_id": choice["id"], "used_fallback": used_fallback})
@@ -321,6 +328,7 @@ def select_exercises(
     selection_rules: list[dict[str, Any]] | None = None,
     template_id: str | None = None,
     deck_id: str | None = None,
+    avoided_ids: set[str] | None = None,
 ) -> list[dict[str, Any]]:
     rule_filtered_candidates = eligible_exercises(exercises, equipment, selection_rules, template_id, deck_id)
     candidates = [exercise for exercise in rule_filtered_candidates if exercise_matches_focus(exercise, movement_focus)]
@@ -331,7 +339,7 @@ def select_exercises(
 
     selected: list[dict[str, Any]] = []
     used_patterns: set[str] = set()
-    for exercise in sorted(candidates, key=lambda item: (item["difficulty_level"], item["id"])):
+    for exercise in sorted(candidates, key=lambda item: (item["id"] in (avoided_ids or set()), item["difficulty_level"], item["id"])):
         if exercise["movement_pattern"] in used_patterns:
             continue
         selected.append(exercise)
@@ -339,7 +347,7 @@ def select_exercises(
         if len(selected) == count:
             return selected
 
-    for exercise in sorted(candidates, key=lambda item: item["id"]):
+    for exercise in sorted(candidates, key=lambda item: (item["id"] in (avoided_ids or set()), item["id"])):
         if exercise not in selected:
             selected.append(exercise)
         if len(selected) == count:
@@ -356,14 +364,52 @@ def card_prescription(exercise: dict[str, Any]) -> str:
     return "quality reps"
 
 
+def apply_history_adaptation(
+    cards: list[dict[str, Any]],
+    eligible: list[dict[str, Any]],
+    history: list[dict[str, Any]],
+    progression_records: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], list[str]]:
+    """Apply safe deterministic progression/regression swaps to selected cards."""
+    if not history:
+        return cards, []
+    eligible_by_id = {exercise["id"]: exercise for exercise in eligible}
+    selected_ids = {exercise["id"] for exercise in cards}
+    adapted = list(cards)
+    notes: list[str] = []
+    for index, exercise in enumerate(adapted):
+        relationship_type = None
+        if should_suggest_regression(history, exercise["id"]):
+            relationship_type = "regression"
+        elif should_suggest_progression(history, exercise["id"]):
+            relationship_type = "progression"
+        if not relationship_type:
+            continue
+        for relation in get_related_exercises(exercise["id"], relationship_type, progression_records):
+            related_id = relation["related_exercise_id"]
+            if related_id not in eligible_by_id or related_id in selected_ids:
+                continue
+            if relationship_type == "progression" and should_suggest_regression(history, related_id):
+                continue
+            selected_ids.remove(exercise["id"])
+            selected_ids.add(related_id)
+            adapted[index] = eligible_by_id[related_id]
+            notes.append(f"suggested {relationship_type}: {exercise['id']} -> {related_id}")
+            break
+    return adapted, notes
+
+
 def build_workout(
     equipment: str | None = "bodyweight",
     time: int | None = 10,
     protocol_id: str | None = None,
     template_id: str | None = None,
     deck_id: str | None = None,
+    history_path: str | Path | None = None,
 ) -> dict[str, Any]:
     exercises = load_records("exercises")
+    history = load_workout_history(history_path)
+    avoided_ids = recent_exercise_ids(history)
     template = None
     movement_focus = None
     validate_deck(deck_id)
@@ -384,9 +430,9 @@ def build_workout(
         equipment_filter = equipment or equipment_from_deck(deck_id) or "bodyweight"
 
     composition_slots: list[dict[str, Any]] = []
+    eligible = eligible_exercises(exercises, equipment_filter, selection_rules, template_id, deck_id)
     if template:
-        eligible = eligible_exercises(exercises, equipment_filter, selection_rules, template_id, deck_id)
-        cards, composition_slots = compose_workout(eligible, composition_rules, template_id, template["protocol_type"])
+        cards, composition_slots = compose_workout(eligible, composition_rules, template_id, template["protocol_type"], avoided_ids)
     else:
         cards = []
 
@@ -399,9 +445,18 @@ def build_workout(
             selection_rules,
             template_id,
             deck_id,
+            avoided_ids,
         )
     if not cards:
         raise ValueError("Could not select any cards for the sample workout.")
+    cards, adaptation_notes = apply_history_adaptation(cards, eligible, history, load_records("exercise_progressions"))
+    for slot, card in zip(composition_slots, cards):
+        slot["exercise_id"] = card["id"]
+    selected_ids = {exercise["id"] for exercise in cards}
+    adaptation_notes = [
+        *[f"avoided recent exercise: {exercise_id}" for exercise_id in sorted(avoided_ids - selected_ids) if exercise_id in {exercise["id"] for exercise in eligible}],
+        *adaptation_notes,
+    ]
     return {
         "protocol": protocol,
         "cards": cards,
@@ -409,10 +464,11 @@ def build_workout(
         "template": template,
         "deck_id": deck_id,
         "composition_slots": composition_slots,
+        "adaptation_notes": adaptation_notes,
     }
 
 
-def format_workout(workout: dict[str, Any], show_progressions: bool = False) -> str:
+def format_workout(workout: dict[str, Any], show_progressions: bool = False, explain_adaptation: bool = False) -> str:
     protocol = workout["protocol"]
     exercise_names = {exercise["id"]: exercise["display_name"] for exercise in load_records("exercises")}
     progression_records = load_records("exercise_progressions") if show_progressions else []
@@ -438,6 +494,8 @@ def format_workout(workout: dict[str, Any], show_progressions: bool = False) -> 
             if regression:
                 name = exercise_names.get(regression["related_exercise_id"], regression["related_exercise_id"])
                 lines.append(f"   Regression: {name} ({regression['progression_type']})")
+    if explain_adaptation and workout.get("adaptation_notes"):
+        lines.extend(["", "Adaptation notes:", *[f"- {note}" for note in workout["adaptation_notes"]]])
     return "\n".join(lines)
 
 
@@ -449,13 +507,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--template", dest="template_id", help="Workout template id, e.g. beginner_full_body or emom_12.")
     parser.add_argument("--deck", dest="deck_id", help="Deck id, e.g. free_bodyweight_starter.")
     parser.add_argument("--show-progressions", action="store_true", help="Show deterministic progression and regression hints.")
+    parser.add_argument("--history", help="Optional local workout history JSON file.")
+    parser.add_argument("--explain-adaptation", action="store_true", help="Explain history-aware exercise choices and swaps.")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    workout = build_workout(args.equipment, args.time, args.protocol_id, args.template_id, args.deck_id)
-    print(format_workout(workout, show_progressions=args.show_progressions))
+    workout = build_workout(args.equipment, args.time, args.protocol_id, args.template_id, args.deck_id, args.history)
+    print(format_workout(workout, show_progressions=args.show_progressions, explain_adaptation=args.explain_adaptation))
 
 
 if __name__ == "__main__":

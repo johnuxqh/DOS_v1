@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deckofsweat.local/schemas/workout_history.schema.json",
+  "title": "Deck of Sweat Workout History Session",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["user_id", "history_id", "generated_at", "completed_at", "source_template_id", "source_deck_id", "protocol_id", "workout_duration_minutes", "session_status", "perceived_difficulty", "session_notes", "completed_exercises"],
+  "properties": {
+    "user_id": {"type": "string", "minLength": 1},
+    "history_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "completed_at": {"type": ["string", "null"], "format": "date-time"},
+    "source_template_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "source_deck_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "protocol_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "workout_duration_minutes": {"type": "integer", "minimum": 1},
+    "session_status": {"type": "string", "enum": ["completed", "partial", "skipped", "planned"]},
+    "perceived_difficulty": {"type": ["integer", "null"], "minimum": 1, "maximum": 10},
+    "session_notes": {"type": "string"},
+    "completed_exercises": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/completedExercise"}
+    }
+  },
+  "$defs": {
+    "completedExercise": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["exercise_id", "prescribed_reps", "prescribed_time_seconds", "completed_reps", "completed_time_seconds", "completion_status", "perceived_effort", "pain_flag", "pain_notes", "progression_applied", "regression_applied"],
+      "properties": {
+        "exercise_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+        "prescribed_reps": {"type": "integer", "minimum": 0},
+        "prescribed_time_seconds": {"type": "integer", "minimum": 0},
+        "completed_reps": {"type": "integer", "minimum": 0},
+        "completed_time_seconds": {"type": "integer", "minimum": 0},
+        "completion_status": {"type": "string", "enum": ["completed", "partial", "skipped"]},
+        "perceived_effort": {"type": ["integer", "null"], "minimum": 1, "maximum": 10},
+        "pain_flag": {"type": "boolean"},
+        "pain_notes": {"type": "string"},
+        "progression_applied": {"type": "boolean"},
+        "regression_applied": {"type": "boolean"}
+      }
+    }
+  }
+}
