@@ -79,3 +79,19 @@ This repository is structured to support later phases without locking the projec
 - **Workout generator:** protocol, template, exercise-selection, workout-composition, progression, and business-rule data provide a clear foundation for deterministic or randomized generation.
 - **App integration:** JSON exports are stable machine-readable assets for a future mobile or web app.
 - **Subscription tracking engine:** deck IDs, entitlement tiers, protocol IDs, exercise IDs, template IDs, and version fields can later support usage history, progression tracking, and content entitlements.
+
+## Workout history and adaptation
+
+P3.00 adds a lightweight, local-first history model without adding accounts or a database:
+
+- `data/schemas/workout_history.schema.json` defines a portable completed-session record.
+- `data/sample/sample_workout_history.json` contains realistic, reference-valid sample sessions.
+- `scripts/adapt_workout.py` calculates recent exercise use, completion rate, average effort, and deterministic progression/regression signals.
+- The sample generator optionally uses history to avoid recent repetition and apply eligible progression or regression swaps.
+
+```bash
+python scripts/generate_sample_workout.py --template beginner_full_body --history data/sample/sample_workout_history.json
+python scripts/generate_sample_workout.py --template beginner_full_body --history data/sample/sample_workout_history.json --explain-adaptation
+```
+
+History is optional; missing or sparse history does not prevent workout generation. See [`docs/workout_history_adaptation.md`](docs/workout_history_adaptation.md) for the model, adaptation thresholds, and future storage options.

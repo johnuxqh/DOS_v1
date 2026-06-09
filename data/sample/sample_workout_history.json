@@ -1,0 +1,74 @@
+[
+  {
+    "user_id": "sample_local_user",
+    "history_id": "sample_session_001",
+    "generated_at": "2026-05-20T17:55:00Z",
+    "completed_at": "2026-05-20T18:15:00Z",
+    "source_template_id": "beginner_full_body",
+    "source_deck_id": "free_beginner",
+    "protocol_id": "amrap_15",
+    "workout_duration_minutes": 15,
+    "session_status": "completed",
+    "perceived_difficulty": 5,
+    "session_notes": "Steady first session with controlled reps.",
+    "completed_exercises": [
+      {"exercise_id": "air_squat", "prescribed_reps": 15, "prescribed_time_seconds": 0, "completed_reps": 15, "completed_time_seconds": 0, "completion_status": "completed", "perceived_effort": 4, "pain_flag": false, "pain_notes": "", "progression_applied": false, "regression_applied": false},
+      {"exercise_id": "dead_bug", "prescribed_reps": 12, "prescribed_time_seconds": 0, "completed_reps": 12, "completed_time_seconds": 0, "completion_status": "completed", "perceived_effort": 4, "pain_flag": false, "pain_notes": "", "progression_applied": false, "regression_applied": false},
+      {"exercise_id": "band_row", "prescribed_reps": 15, "prescribed_time_seconds": 0, "completed_reps": 15, "completed_time_seconds": 0, "completion_status": "completed", "perceived_effort": 5, "pain_flag": false, "pain_notes": "", "progression_applied": false, "regression_applied": false}
+    ]
+  },
+  {
+    "user_id": "sample_local_user",
+    "history_id": "sample_session_002",
+    "generated_at": "2026-05-24T16:55:00Z",
+    "completed_at": "2026-05-24T17:14:00Z",
+    "source_template_id": "hotel_no_equipment",
+    "source_deck_id": "free_bodyweight",
+    "protocol_id": "amrap_10",
+    "workout_duration_minutes": 10,
+    "session_status": "completed",
+    "perceived_difficulty": 6,
+    "session_notes": "Travel workout; kept the pace conversational.",
+    "completed_exercises": [
+      {"exercise_id": "air_squat", "prescribed_reps": 15, "prescribed_time_seconds": 0, "completed_reps": 15, "completed_time_seconds": 0, "completion_status": "completed", "perceived_effort": 5, "pain_flag": false, "pain_notes": "", "progression_applied": false, "regression_applied": false},
+      {"exercise_id": "dead_bug", "prescribed_reps": 12, "prescribed_time_seconds": 0, "completed_reps": 12, "completed_time_seconds": 0, "completion_status": "completed", "perceived_effort": 5, "pain_flag": false, "pain_notes": "", "progression_applied": false, "regression_applied": false},
+      {"exercise_id": "glute_bridge", "prescribed_reps": 15, "prescribed_time_seconds": 0, "completed_reps": 15, "completed_time_seconds": 0, "completion_status": "completed", "perceived_effort": 5, "pain_flag": false, "pain_notes": "", "progression_applied": false, "regression_applied": false}
+    ]
+  },
+  {
+    "user_id": "sample_local_user",
+    "history_id": "sample_session_003",
+    "generated_at": "2026-05-29T17:50:00Z",
+    "completed_at": "2026-05-29T18:12:00Z",
+    "source_template_id": "beginner_full_body",
+    "source_deck_id": "free_beginner",
+    "protocol_id": "amrap_15",
+    "workout_duration_minutes": 15,
+    "session_status": "partial",
+    "perceived_difficulty": 9,
+    "session_notes": "Stopped the side plank after shoulder discomfort.",
+    "completed_exercises": [
+      {"exercise_id": "air_squat", "prescribed_reps": 15, "prescribed_time_seconds": 0, "completed_reps": 15, "completed_time_seconds": 0, "completion_status": "completed", "perceived_effort": 5, "pain_flag": false, "pain_notes": "", "progression_applied": false, "regression_applied": false},
+      {"exercise_id": "side_plank", "prescribed_reps": 0, "prescribed_time_seconds": 30, "completed_reps": 0, "completed_time_seconds": 10, "completion_status": "partial", "perceived_effort": 9, "pain_flag": true, "pain_notes": "Shoulder discomfort; stopped immediately.", "progression_applied": false, "regression_applied": false},
+      {"exercise_id": "band_pull_apart", "prescribed_reps": 15, "prescribed_time_seconds": 0, "completed_reps": 12, "completed_time_seconds": 0, "completion_status": "partial", "perceived_effort": 8, "pain_flag": false, "pain_notes": "", "progression_applied": false, "regression_applied": false}
+    ]
+  },
+  {
+    "user_id": "sample_local_user",
+    "history_id": "sample_session_004",
+    "generated_at": "2026-06-03T17:50:00Z",
+    "completed_at": "2026-06-03T18:10:00Z",
+    "source_template_id": "beginner_full_body",
+    "source_deck_id": "free_beginner",
+    "protocol_id": "amrap_15",
+    "workout_duration_minutes": 15,
+    "session_status": "completed",
+    "perceived_difficulty": 5,
+    "session_notes": "Dead bug continued to feel controlled and repeatable.",
+    "completed_exercises": [
+      {"exercise_id": "dead_bug", "prescribed_reps": 12, "prescribed_time_seconds": 0, "completed_reps": 12, "completed_time_seconds": 0, "completion_status": "completed", "perceived_effort": 5, "pain_flag": false, "pain_notes": "", "progression_applied": false, "regression_applied": false},
+      {"exercise_id": "band_pallof_press", "prescribed_reps": 12, "prescribed_time_seconds": 0, "completed_reps": 12, "completed_time_seconds": 0, "completion_status": "completed", "perceived_effort": 5, "pain_flag": false, "pain_notes": "", "progression_applied": false, "regression_applied": false},
+      {"exercise_id": "reverse_lunge", "prescribed_reps": 12, "prescribed_time_seconds": 0, "completed_reps": 12, "completed_time_seconds": 0, "completion_status": "completed", "perceived_effort": 6, "pain_flag": false, "pain_notes": "", "progression_applied": false, "regression_applied": false}
+    ]
+  }
+]

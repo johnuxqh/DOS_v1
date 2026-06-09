@@ -1,8 +1,20 @@
 from __future__ import annotations
 
 import json
+import subprocess
+import sys
 from pathlib import Path
 
+import pytest
+
+from scripts.adapt_workout import (
+    exercise_average_effort,
+    exercise_completion_rate,
+    recent_exercise_ids,
+    should_avoid_exercise,
+    should_suggest_progression,
+    should_suggest_regression,
+)
 from scripts.export_json import export_all, records_from_csv
 from scripts.generate_sample_workout import (
     apply_selection_rules,
@@ -45,6 +57,8 @@ def test_required_files_exist() -> None:
         "data/schemas/exercise_selection_rule.schema.json",
         "data/schemas/workout_composition_rule.schema.json",
         "data/schemas/exercise_progression.schema.json",
+        "data/schemas/workout_history.schema.json",
+        "data/sample/sample_workout_history.json",
     ]
     for file_path in required_files:
         assert (ROOT / file_path).exists(), file_path
@@ -298,3 +312,93 @@ def test_sample_workout_generation_accepts_deck() -> None:
     workout = build_workout(equipment="bodyweight", time=10, deck_id="free_bodyweight_starter")
     assert workout["deck_id"] == "free_bodyweight_starter"
     assert len(workout["cards"]) >= 1
+
+
+def sample_history() -> list[dict[str, object]]:
+    return json.loads((ROOT / "data/sample/sample_workout_history.json").read_text(encoding="utf-8"))
+
+
+def test_workout_history_schema_validates() -> None:
+    assert validate_schema("workout_history", sample_history()) == []
+
+
+def test_sample_history_references_existing_ids() -> None:
+    history = sample_history()
+    exercise_ids = {record["id"] for record in records_from_csv("exercises")}
+    template_ids = {record["template_id"] for record in records_from_csv("workout_templates")}
+    deck_ids = {record["id"] for record in records_from_csv("taxonomy") if record["type"] == "deck"}
+    protocol_ids = {record["id"] for record in records_from_csv("protocols")}
+    for session in history:
+        assert session["source_template_id"] in template_ids
+        assert session["source_deck_id"] in deck_ids
+        assert session["protocol_id"] in protocol_ids
+        assert {record["exercise_id"] for record in session["completed_exercises"]} <= exercise_ids
+
+
+def test_recent_exercise_ids_uses_recent_sessions() -> None:
+    history = sample_history()
+    assert recent_exercise_ids(history, lookback_sessions=1) == {"dead_bug", "band_pallof_press", "reverse_lunge"}
+
+
+def test_exercise_completion_rate_calculation() -> None:
+    assert exercise_completion_rate(sample_history(), "dead_bug") == 1.0
+    assert exercise_completion_rate(sample_history(), "missing_exercise") == 0.0
+
+
+def test_exercise_average_effort_calculation() -> None:
+    assert exercise_average_effort(sample_history(), "dead_bug") == pytest.approx(14 / 3)
+    assert exercise_average_effort(sample_history(), "missing_exercise") is None
+
+
+def test_should_avoid_exercise_uses_lookback() -> None:
+    history = sample_history()
+    assert should_avoid_exercise(history, "dead_bug", lookback_sessions=2)
+    assert not should_avoid_exercise(history, "band_row", lookback_sessions=2)
+
+
+def test_progression_suggestion_logic() -> None:
+    assert should_suggest_progression(sample_history(), "dead_bug")
+    assert not should_suggest_progression(sample_history(), "side_plank")
+
+
+def test_regression_suggestion_logic() -> None:
+    assert should_suggest_regression(sample_history(), "side_plank")
+    assert not should_suggest_regression(sample_history(), "dead_bug")
+
+
+def test_generator_works_without_history() -> None:
+    workout = build_workout(equipment=None, template_id="beginner_full_body")
+    assert workout["cards"]
+    assert workout["adaptation_notes"] == []
+
+
+def test_generator_works_with_history() -> None:
+    workout = build_workout(equipment=None, template_id="beginner_full_body", history_path=ROOT / "data/sample/sample_workout_history.json")
+    assert workout["cards"]
+    assert workout["adaptation_notes"]
+
+
+def test_explain_adaptation_produces_notes() -> None:
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/generate_sample_workout.py",
+            "--template",
+            "beginner_full_body",
+            "--history",
+            "data/sample/sample_workout_history.json",
+            "--explain-adaptation",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert "Adaptation notes:" in result.stdout
+    assert "avoided recent exercise:" in result.stdout
+
+
+def test_generator_ignores_missing_optional_history() -> None:
+    workout = build_workout(equipment=None, template_id="beginner_full_body", history_path=ROOT / "missing_history.json")
+    assert workout["cards"]
+    assert workout["adaptation_notes"] == []

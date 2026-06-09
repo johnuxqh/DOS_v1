@@ -168,6 +168,8 @@ def record_id_field(name: str) -> str:
         return "composition_id"
     if name == "exercise_progressions":
         return "progression_id"
+    if name == "workout_history":
+        return "history_id"
     return "id"
 
 
@@ -405,6 +407,32 @@ def validate_exercise_progression_business_rules(
     return errors
 
 
+def validate_workout_history_references(
+    history: list[dict[str, Any]],
+    exercise_ids: set[str],
+    template_ids: set[str],
+    deck_ids: set[str],
+    protocol_ids: set[str],
+) -> list[str]:
+    errors: list[str] = []
+    for session in history:
+        history_id = session.get("history_id", "<missing>")
+        references = (
+            ("source_template_id", template_ids),
+            ("source_deck_id", deck_ids),
+            ("protocol_id", protocol_ids),
+        )
+        for field, known_ids in references:
+            value = session.get(field)
+            if value not in known_ids:
+                errors.append(f"workout_history: session '{history_id}' references unknown {field} '{value}'")
+        for exercise in session.get("completed_exercises", []):
+            exercise_id = exercise.get("exercise_id")
+            if exercise_id not in exercise_ids:
+                errors.append(f"workout_history: session '{history_id}' references unknown exercise_id '{exercise_id}'")
+    return errors
+
+
 def run_validation() -> list[str]:
     errors: list[str] = []
     taxonomy_rows: list[dict[str, str]] = []
@@ -456,9 +484,21 @@ def run_validation() -> list[str]:
                 template_ids,
             )
         )
+    exercise_ids = {record["id"] for record in converted_records.get("exercises", [])}
     if "exercise_progressions" in converted_records:
-        exercise_ids = {record["id"] for record in converted_records.get("exercises", [])}
         errors.extend(validate_exercise_progression_business_rules(converted_records["exercise_progressions"], exercise_ids))
+
+    history_path = ROOT / "data" / "sample" / "sample_workout_history.json"
+    try:
+        history = json.loads(history_path.read_text(encoding="utf-8"))
+        if not isinstance(history, list):
+            errors.append("workout_history: sample history must be a JSON array of sessions")
+        else:
+            errors.extend(validate_schema("workout_history", history))
+            protocol_ids = {record["id"] for record in converted_records.get("protocols", [])}
+            errors.extend(validate_workout_history_references(history, exercise_ids, template_ids, deck_ids, protocol_ids))
+    except (OSError, json.JSONDecodeError) as exc:
+        errors.append(f"workout_history: failed to load sample history: {exc}")
     return errors
 
 
