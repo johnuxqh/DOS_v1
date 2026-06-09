@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deckofsweat.local/schemas/exercise_selection_rule.schema.json",
+  "title": "Deck of Sweat Exercise Selection Rule",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["rule_id", "rule_name", "description", "active", "priority", "applies_to_template_id", "applies_to_deck_id", "allowed_movement_patterns", "excluded_movement_patterns", "required_equipment", "excluded_equipment", "min_difficulty", "max_difficulty", "include_tags", "exclude_tags", "allow_progressions", "allow_regressions", "max_repeats_per_workout"],
+  "properties": {
+    "rule_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "rule_name": {"type": "string", "minLength": 1},
+    "description": {"type": "string", "minLength": 1},
+    "active": {"type": "boolean"},
+    "priority": {"type": "integer", "minimum": 1},
+    "applies_to_template_id": {"type": "string"},
+    "applies_to_deck_id": {"type": "string"},
+    "allowed_movement_patterns": {"type": "array", "items": {"type": "string"}},
+    "excluded_movement_patterns": {"type": "array", "items": {"type": "string"}},
+    "required_equipment": {"type": "array", "items": {"type": "string"}},
+    "excluded_equipment": {"type": "array", "items": {"type": "string"}},
+    "min_difficulty": {"type": "integer", "minimum": 0, "maximum": 5},
+    "max_difficulty": {"type": "integer", "minimum": 0, "maximum": 5},
+    "include_tags": {"type": "array", "items": {"type": "string"}},
+    "exclude_tags": {"type": "array", "items": {"type": "string"}},
+    "allow_progressions": {"type": "boolean"},
+    "allow_regressions": {"type": "boolean"},
+    "max_repeats_per_workout": {"type": "integer", "minimum": 1}
+  }
+}

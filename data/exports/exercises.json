@@ -1,0 +1,1168 @@
+[
+  {
+    "id": "air_squat",
+    "name": "Air Squat",
+    "display_name": "Air Squat",
+    "equipment": [
+      "bodyweight"
+    ],
+    "equipment_group": "none",
+    "movement_pattern": "squat",
+    "primary_category": "lower_body",
+    "secondary_categories": [
+      "mobility",
+      "conditioning"
+    ],
+    "difficulty_level": 1,
+    "intensity_level": "moderate",
+    "impact_level": "low",
+    "space_required": "small",
+    "skill_level": "beginner",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "general",
+      "beginner"
+    ],
+    "protocol_suitability": [
+      "amrap",
+      "emom",
+      "tabata",
+      "ladder"
+    ],
+    "default_reps": "12-20",
+    "default_time_seconds": 0,
+    "default_sets": 1,
+    "regression": "Box squat",
+    "progression": "Tempo squat",
+    "coaching_cues": [
+      "Knees track toes",
+      "Chest tall",
+      "Full foot pressure"
+    ],
+    "safety_notes": [
+      "Avoid painful depth",
+      "Control each rep"
+    ],
+    "contraindications": [
+      "acute_knee_pain"
+    ],
+    "strength_score": 3,
+    "mobility_score": 2,
+    "stability_score": 2,
+    "power_score": 1,
+    "conditioning_score": 3,
+    "card_text_short": "12-20 reps",
+    "card_text_long": "Sit between the hips and stand tall with control.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "reviewed",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "band_pallof_press",
+    "name": "Band Pallof Press",
+    "display_name": "Band Pallof Press",
+    "equipment": [
+      "resistance_band"
+    ],
+    "equipment_group": "band",
+    "movement_pattern": "anti_rotate",
+    "primary_category": "core",
+    "secondary_categories": [
+      "stability"
+    ],
+    "difficulty_level": 2,
+    "intensity_level": "low",
+    "impact_level": "low",
+    "space_required": "small",
+    "skill_level": "beginner",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "general",
+      "athlete"
+    ],
+    "protocol_suitability": [
+      "emom",
+      "density",
+      "build_stack"
+    ],
+    "default_reps": "8-12/side",
+    "default_time_seconds": 0,
+    "default_sets": 1,
+    "regression": "Half-kneeling Pallof hold",
+    "progression": "Walk-out Pallof press",
+    "coaching_cues": [
+      "Ribs down",
+      "Resist rotation",
+      "Press straight out"
+    ],
+    "safety_notes": [
+      "Anchor band securely",
+      "Keep knees soft"
+    ],
+    "contraindications": [
+      "acute_low_back_pain"
+    ],
+    "strength_score": 1,
+    "mobility_score": 1,
+    "stability_score": 5,
+    "power_score": 0,
+    "conditioning_score": 1,
+    "card_text_short": "8-12/side",
+    "card_text_long": "Press the band forward while resisting rotation.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "evidence_checked",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "band_pull_apart",
+    "name": "Band Pull Apart",
+    "display_name": "Band Pull Apart",
+    "equipment": [
+      "resistance_band"
+    ],
+    "equipment_group": "band",
+    "movement_pattern": "pull",
+    "primary_category": "upper_body",
+    "secondary_categories": [
+      "mobility",
+      "stability"
+    ],
+    "difficulty_level": 1,
+    "intensity_level": "low",
+    "impact_level": "low",
+    "space_required": "small",
+    "skill_level": "beginner",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "general",
+      "beginner"
+    ],
+    "protocol_suitability": [
+      "amrap",
+      "emom",
+      "pyramid"
+    ],
+    "default_reps": "12-20",
+    "default_time_seconds": 0,
+    "default_sets": 1,
+    "regression": "Wider grip pull-apart",
+    "progression": "Pause pull-apart",
+    "coaching_cues": [
+      "Arms long",
+      "Pull to chest height",
+      "Shoulders down"
+    ],
+    "safety_notes": [
+      "Use light tension",
+      "Avoid neck tension"
+    ],
+    "contraindications": [
+      "acute_shoulder_pain"
+    ],
+    "strength_score": 1,
+    "mobility_score": 2,
+    "stability_score": 3,
+    "power_score": 0,
+    "conditioning_score": 1,
+    "card_text_short": "12-20 reps",
+    "card_text_long": "Pull the band apart under control at chest height.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "reviewed",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "band_row",
+    "name": "Band Row",
+    "display_name": "Band Row",
+    "equipment": [
+      "resistance_band"
+    ],
+    "equipment_group": "band",
+    "movement_pattern": "pull",
+    "primary_category": "upper_body",
+    "secondary_categories": [
+      "stability"
+    ],
+    "difficulty_level": 1,
+    "intensity_level": "moderate",
+    "impact_level": "low",
+    "space_required": "small",
+    "skill_level": "beginner",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "general",
+      "beginner"
+    ],
+    "protocol_suitability": [
+      "amrap",
+      "emom",
+      "ladder"
+    ],
+    "default_reps": "10-15",
+    "default_time_seconds": 0,
+    "default_sets": 1,
+    "regression": "Lighter band row",
+    "progression": "Slower tempo band row",
+    "coaching_cues": [
+      "Squeeze shoulder blades",
+      "Elbows close",
+      "Tall posture"
+    ],
+    "safety_notes": [
+      "Anchor band securely",
+      "Avoid shrugging"
+    ],
+    "contraindications": [
+      "acute_shoulder_pain"
+    ],
+    "strength_score": 2,
+    "mobility_score": 1,
+    "stability_score": 2,
+    "power_score": 0,
+    "conditioning_score": 2,
+    "card_text_short": "10-15 reps",
+    "card_text_long": "Row the band toward the ribs with tall posture.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "evidence_checked",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "barbell_romanian_deadlift",
+    "name": "Barbell Romanian Deadlift",
+    "display_name": "Barbell Romanian Deadlift",
+    "equipment": [
+      "barbell"
+    ],
+    "equipment_group": "barbell",
+    "movement_pattern": "hinge",
+    "primary_category": "lower_body",
+    "secondary_categories": [
+      "strength",
+      "mobility"
+    ],
+    "difficulty_level": 3,
+    "intensity_level": "moderate",
+    "impact_level": "low",
+    "space_required": "small",
+    "skill_level": "intermediate",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "athlete"
+    ],
+    "protocol_suitability": [
+      "density",
+      "emom",
+      "chipper"
+    ],
+    "default_reps": "6-10",
+    "default_time_seconds": 0,
+    "default_sets": 1,
+    "regression": "Dumbbell Romanian deadlift",
+    "progression": "Heavier barbell RDL",
+    "coaching_cues": [
+      "Lats tight",
+      "Bar skims legs",
+      "Hips travel back"
+    ],
+    "safety_notes": [
+      "Use conservative load",
+      "Stop if back rounds"
+    ],
+    "contraindications": [
+      "acute_low_back_pain",
+      "untrained_hinge"
+    ],
+    "strength_score": 5,
+    "mobility_score": 3,
+    "stability_score": 2,
+    "power_score": 1,
+    "conditioning_score": 2,
+    "card_text_short": "6-10 reps",
+    "card_text_long": "Hinge with the bar close and return to a tall stand.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "reviewed",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "bear_crawl",
+    "name": "Bear Crawl",
+    "display_name": "Bear Crawl",
+    "equipment": [
+      "bodyweight"
+    ],
+    "equipment_group": "none",
+    "movement_pattern": "locomotion",
+    "primary_category": "full_body",
+    "secondary_categories": [
+      "core",
+      "conditioning",
+      "stability"
+    ],
+    "difficulty_level": 3,
+    "intensity_level": "moderate",
+    "impact_level": "low",
+    "space_required": "medium",
+    "skill_level": "intermediate",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "general",
+      "athlete"
+    ],
+    "protocol_suitability": [
+      "amrap",
+      "emom",
+      "chaser"
+    ],
+    "default_reps": "10-20 steps",
+    "default_time_seconds": 30,
+    "default_sets": 1,
+    "regression": "Beast hold",
+    "progression": "Longer crawl",
+    "coaching_cues": [
+      "Opposite hand and foot",
+      "Hips low",
+      "Quiet steps"
+    ],
+    "safety_notes": [
+      "Keep wrists comfortable",
+      "Move slowly first"
+    ],
+    "contraindications": [
+      "wrist_pain",
+      "acute_shoulder_pain"
+    ],
+    "strength_score": 2,
+    "mobility_score": 2,
+    "stability_score": 4,
+    "power_score": 1,
+    "conditioning_score": 4,
+    "card_text_short": "30 sec",
+    "card_text_long": "Crawl with hips low and controlled opposite-limb steps.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "reviewed",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "bench_step_up",
+    "name": "Bench Step-Up",
+    "display_name": "Bench Step-Up",
+    "equipment": [
+      "bench",
+      "box"
+    ],
+    "equipment_group": "portable",
+    "movement_pattern": "squat",
+    "primary_category": "lower_body",
+    "secondary_categories": [
+      "stability",
+      "conditioning"
+    ],
+    "difficulty_level": 2,
+    "intensity_level": "moderate",
+    "impact_level": "low",
+    "space_required": "small",
+    "skill_level": "beginner",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "general",
+      "athlete"
+    ],
+    "protocol_suitability": [
+      "amrap",
+      "emom",
+      "ladder"
+    ],
+    "default_reps": "8-12/side",
+    "default_time_seconds": 0,
+    "default_sets": 1,
+    "regression": "Lower box step-up",
+    "progression": "Loaded step-up",
+    "coaching_cues": [
+      "Whole foot on bench",
+      "Drive through top leg",
+      "Stand tall"
+    ],
+    "safety_notes": [
+      "Use stable surface",
+      "Step down with control"
+    ],
+    "contraindications": [
+      "acute_knee_pain",
+      "balance_limitation"
+    ],
+    "strength_score": 3,
+    "mobility_score": 2,
+    "stability_score": 3,
+    "power_score": 1,
+    "conditioning_score": 3,
+    "card_text_short": "8-12/side",
+    "card_text_long": "Step onto a stable bench and control the descent.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "reviewed",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "dead_bug",
+    "name": "Dead Bug",
+    "display_name": "Dead Bug",
+    "equipment": [
+      "bodyweight"
+    ],
+    "equipment_group": "none",
+    "movement_pattern": "anti_rotate",
+    "primary_category": "core",
+    "secondary_categories": [
+      "stability",
+      "mobility"
+    ],
+    "difficulty_level": 1,
+    "intensity_level": "low",
+    "impact_level": "low",
+    "space_required": "small",
+    "skill_level": "beginner",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "general",
+      "beginner"
+    ],
+    "protocol_suitability": [
+      "emom",
+      "tabata",
+      "density"
+    ],
+    "default_reps": "6-10/side",
+    "default_time_seconds": 30,
+    "default_sets": 1,
+    "regression": "Heel taps",
+    "progression": "Weighted dead bug",
+    "coaching_cues": [
+      "Low back gently anchored",
+      "Move slow",
+      "Exhale as limb extends"
+    ],
+    "safety_notes": [
+      "Reduce range if back arches"
+    ],
+    "contraindications": [
+      "acute_low_back_pain"
+    ],
+    "strength_score": 1,
+    "mobility_score": 2,
+    "stability_score": 4,
+    "power_score": 0,
+    "conditioning_score": 1,
+    "card_text_short": "30 sec",
+    "card_text_long": "Move opposite arm and leg while keeping the trunk quiet.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "reviewed",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "dumbbell_farmer_carry",
+    "name": "Dumbbell Farmer Carry",
+    "display_name": "Dumbbell Farmer Carry",
+    "equipment": [
+      "dumbbell"
+    ],
+    "equipment_group": "free_weight",
+    "movement_pattern": "carry",
+    "primary_category": "full_body",
+    "secondary_categories": [
+      "core",
+      "conditioning",
+      "stability"
+    ],
+    "difficulty_level": 2,
+    "intensity_level": "moderate",
+    "impact_level": "low",
+    "space_required": "medium",
+    "skill_level": "beginner",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "general",
+      "athlete"
+    ],
+    "protocol_suitability": [
+      "chipper",
+      "density",
+      "build_stack"
+    ],
+    "default_reps": "20-40 steps",
+    "default_time_seconds": 30,
+    "default_sets": 1,
+    "regression": "Single light carry",
+    "progression": "Heavier farmer carry",
+    "coaching_cues": [
+      "Tall posture",
+      "Crush the handles",
+      "Walk under control"
+    ],
+    "safety_notes": [
+      "Keep path clear",
+      "Set weights down safely"
+    ],
+    "contraindications": [
+      "grip_injury"
+    ],
+    "strength_score": 3,
+    "mobility_score": 1,
+    "stability_score": 4,
+    "power_score": 0,
+    "conditioning_score": 3,
+    "card_text_short": "30 sec",
+    "card_text_long": "Carry dumbbells with tall posture and controlled steps.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "reviewed",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "dumbbell_goblet_squat",
+    "name": "Dumbbell Goblet Squat",
+    "display_name": "Dumbbell Goblet Squat",
+    "equipment": [
+      "dumbbell"
+    ],
+    "equipment_group": "free_weight",
+    "movement_pattern": "squat",
+    "primary_category": "lower_body",
+    "secondary_categories": [
+      "core",
+      "strength"
+    ],
+    "difficulty_level": 2,
+    "intensity_level": "moderate",
+    "impact_level": "low",
+    "space_required": "small",
+    "skill_level": "beginner",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "general",
+      "athlete"
+    ],
+    "protocol_suitability": [
+      "amrap",
+      "emom",
+      "ladder"
+    ],
+    "default_reps": "8-12",
+    "default_time_seconds": 0,
+    "default_sets": 1,
+    "regression": "Bodyweight squat",
+    "progression": "Heavier goblet squat",
+    "coaching_cues": [
+      "Hold weight close",
+      "Knees track toes",
+      "Brace before descent"
+    ],
+    "safety_notes": [
+      "Choose load you can control",
+      "Avoid painful depth"
+    ],
+    "contraindications": [
+      "acute_knee_pain",
+      "acute_low_back_pain"
+    ],
+    "strength_score": 4,
+    "mobility_score": 2,
+    "stability_score": 3,
+    "power_score": 1,
+    "conditioning_score": 3,
+    "card_text_short": "8-12 reps",
+    "card_text_long": "Squat with the dumbbell held close at the chest.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "evidence_checked",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "dumbbell_romanian_deadlift",
+    "name": "Dumbbell Romanian Deadlift",
+    "display_name": "Dumbbell Romanian Deadlift",
+    "equipment": [
+      "dumbbell"
+    ],
+    "equipment_group": "free_weight",
+    "movement_pattern": "hinge",
+    "primary_category": "lower_body",
+    "secondary_categories": [
+      "strength",
+      "mobility"
+    ],
+    "difficulty_level": 2,
+    "intensity_level": "moderate",
+    "impact_level": "low",
+    "space_required": "small",
+    "skill_level": "beginner",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "general",
+      "athlete"
+    ],
+    "protocol_suitability": [
+      "amrap",
+      "emom",
+      "density"
+    ],
+    "default_reps": "8-12",
+    "default_time_seconds": 0,
+    "default_sets": 1,
+    "regression": "Hip hinge drill",
+    "progression": "Single-leg dumbbell RDL",
+    "coaching_cues": [
+      "Push hips back",
+      "Soft knees",
+      "Keep weights close"
+    ],
+    "safety_notes": [
+      "Maintain neutral spine",
+      "Stop if back pain appears"
+    ],
+    "contraindications": [
+      "acute_low_back_pain"
+    ],
+    "strength_score": 4,
+    "mobility_score": 3,
+    "stability_score": 2,
+    "power_score": 1,
+    "conditioning_score": 2,
+    "card_text_short": "8-12 reps",
+    "card_text_long": "Hinge at the hips with dumbbells close to the legs.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "evidence_checked",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "dumbbell_row",
+    "name": "Dumbbell Row",
+    "display_name": "Dumbbell Row",
+    "equipment": [
+      "dumbbell",
+      "bench"
+    ],
+    "equipment_group": "free_weight",
+    "movement_pattern": "pull",
+    "primary_category": "upper_body",
+    "secondary_categories": [
+      "strength",
+      "stability"
+    ],
+    "difficulty_level": 2,
+    "intensity_level": "moderate",
+    "impact_level": "low",
+    "space_required": "small",
+    "skill_level": "beginner",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "general",
+      "athlete"
+    ],
+    "protocol_suitability": [
+      "amrap",
+      "emom",
+      "ladder"
+    ],
+    "default_reps": "8-12/side",
+    "default_time_seconds": 0,
+    "default_sets": 1,
+    "regression": "Supported light row",
+    "progression": "Renegade row",
+    "coaching_cues": [
+      "Pull elbow to hip",
+      "Keep shoulders square",
+      "Control the lower"
+    ],
+    "safety_notes": [
+      "Support torso as needed",
+      "Avoid twisting"
+    ],
+    "contraindications": [
+      "acute_shoulder_pain",
+      "acute_low_back_pain"
+    ],
+    "strength_score": 3,
+    "mobility_score": 1,
+    "stability_score": 3,
+    "power_score": 0,
+    "conditioning_score": 2,
+    "card_text_short": "8-12/side",
+    "card_text_long": "Row the dumbbell toward the hip with a stable torso.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "evidence_checked",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "glute_bridge",
+    "name": "Glute Bridge",
+    "display_name": "Glute Bridge",
+    "equipment": [
+      "bodyweight"
+    ],
+    "equipment_group": "none",
+    "movement_pattern": "hinge",
+    "primary_category": "lower_body",
+    "secondary_categories": [
+      "core",
+      "stability"
+    ],
+    "difficulty_level": 1,
+    "intensity_level": "low",
+    "impact_level": "low",
+    "space_required": "small",
+    "skill_level": "beginner",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "general",
+      "beginner"
+    ],
+    "protocol_suitability": [
+      "amrap",
+      "emom",
+      "pyramid"
+    ],
+    "default_reps": "12-20",
+    "default_time_seconds": 0,
+    "default_sets": 1,
+    "regression": "Short-range glute bridge",
+    "progression": "Single-leg glute bridge",
+    "coaching_cues": [
+      "Press through heels",
+      "Ribs down",
+      "Squeeze glutes at top"
+    ],
+    "safety_notes": [
+      "Avoid over-arching low back"
+    ],
+    "contraindications": [
+      "acute_low_back_pain"
+    ],
+    "strength_score": 2,
+    "mobility_score": 1,
+    "stability_score": 2,
+    "power_score": 1,
+    "conditioning_score": 1,
+    "card_text_short": "12-20 reps",
+    "card_text_long": "Lift hips by squeezing glutes without arching the back.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "reviewed",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "kettlebell_deadlift",
+    "name": "Kettlebell Deadlift",
+    "display_name": "Kettlebell Deadlift",
+    "equipment": [
+      "kettlebell"
+    ],
+    "equipment_group": "free_weight",
+    "movement_pattern": "hinge",
+    "primary_category": "lower_body",
+    "secondary_categories": [
+      "strength"
+    ],
+    "difficulty_level": 2,
+    "intensity_level": "moderate",
+    "impact_level": "low",
+    "space_required": "small",
+    "skill_level": "beginner",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "general",
+      "athlete"
+    ],
+    "protocol_suitability": [
+      "amrap",
+      "emom",
+      "ladder"
+    ],
+    "default_reps": "8-12",
+    "default_time_seconds": 0,
+    "default_sets": 1,
+    "regression": "Raised kettlebell deadlift",
+    "progression": "Double kettlebell deadlift",
+    "coaching_cues": [
+      "Hips back",
+      "Chest proud",
+      "Stand tall with glutes"
+    ],
+    "safety_notes": [
+      "Keep bell close",
+      "Avoid rounding back"
+    ],
+    "contraindications": [
+      "acute_low_back_pain"
+    ],
+    "strength_score": 4,
+    "mobility_score": 2,
+    "stability_score": 2,
+    "power_score": 1,
+    "conditioning_score": 2,
+    "card_text_short": "8-12 reps",
+    "card_text_long": "Deadlift the kettlebell by hinging and standing tall.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "evidence_checked",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "kettlebell_goblet_squat",
+    "name": "Kettlebell Goblet Squat",
+    "display_name": "Kettlebell Goblet Squat",
+    "equipment": [
+      "kettlebell"
+    ],
+    "equipment_group": "free_weight",
+    "movement_pattern": "squat",
+    "primary_category": "lower_body",
+    "secondary_categories": [
+      "core",
+      "strength"
+    ],
+    "difficulty_level": 2,
+    "intensity_level": "moderate",
+    "impact_level": "low",
+    "space_required": "small",
+    "skill_level": "beginner",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "general",
+      "athlete"
+    ],
+    "protocol_suitability": [
+      "amrap",
+      "emom",
+      "pyramid"
+    ],
+    "default_reps": "8-12",
+    "default_time_seconds": 0,
+    "default_sets": 1,
+    "regression": "Bodyweight squat",
+    "progression": "Heavier goblet squat",
+    "coaching_cues": [
+      "Hug bell close",
+      "Elbows inside knees",
+      "Full foot pressure"
+    ],
+    "safety_notes": [
+      "Control depth",
+      "Keep torso braced"
+    ],
+    "contraindications": [
+      "acute_knee_pain",
+      "acute_low_back_pain"
+    ],
+    "strength_score": 4,
+    "mobility_score": 2,
+    "stability_score": 3,
+    "power_score": 1,
+    "conditioning_score": 3,
+    "card_text_short": "8-12 reps",
+    "card_text_long": "Squat with a kettlebell held close to the chest.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "evidence_checked",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "kettlebell_swing",
+    "name": "Kettlebell Swing",
+    "display_name": "Kettlebell Swing",
+    "equipment": [
+      "kettlebell"
+    ],
+    "equipment_group": "free_weight",
+    "movement_pattern": "hinge",
+    "primary_category": "power",
+    "secondary_categories": [
+      "conditioning",
+      "lower_body"
+    ],
+    "difficulty_level": 4,
+    "intensity_level": "high",
+    "impact_level": "low",
+    "space_required": "medium",
+    "skill_level": "intermediate",
+    "beginner_safe": false,
+    "athlete_suitability": [
+      "athlete"
+    ],
+    "protocol_suitability": [
+      "emom",
+      "tabata",
+      "chaser"
+    ],
+    "default_reps": "10-15",
+    "default_time_seconds": 0,
+    "default_sets": 1,
+    "regression": "Kettlebell deadlift",
+    "progression": "Heavier swing",
+    "coaching_cues": [
+      "Explosive hip snap",
+      "Arms relaxed",
+      "Bell floats from hips"
+    ],
+    "safety_notes": [
+      "Learn hinge first",
+      "Do not squat the swing"
+    ],
+    "contraindications": [
+      "acute_low_back_pain",
+      "untrained_hinge"
+    ],
+    "strength_score": 3,
+    "mobility_score": 2,
+    "stability_score": 3,
+    "power_score": 5,
+    "conditioning_score": 5,
+    "card_text_short": "10-15 reps",
+    "card_text_long": "Hinge and snap the hips to swing the bell to chest height.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "reviewed",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "mountain_climbers",
+    "name": "Mountain Climbers",
+    "display_name": "Mountain Climbers",
+    "equipment": [
+      "bodyweight"
+    ],
+    "equipment_group": "none",
+    "movement_pattern": "locomotion",
+    "primary_category": "conditioning",
+    "secondary_categories": [
+      "core",
+      "full_body"
+    ],
+    "difficulty_level": 3,
+    "intensity_level": "high",
+    "impact_level": "moderate",
+    "space_required": "small",
+    "skill_level": "beginner",
+    "beginner_safe": false,
+    "athlete_suitability": [
+      "general",
+      "athlete"
+    ],
+    "protocol_suitability": [
+      "tabata",
+      "chaser",
+      "cardio_sandwich"
+    ],
+    "default_reps": "20-40",
+    "default_time_seconds": 30,
+    "default_sets": 1,
+    "regression": "Slow mountain climbers",
+    "progression": "Cross-body mountain climbers",
+    "coaching_cues": [
+      "Hands planted",
+      "Drive knees under hips",
+      "Keep shoulders stacked"
+    ],
+    "safety_notes": [
+      "Use slower pace for control",
+      "Stop if wrists hurt"
+    ],
+    "contraindications": [
+      "wrist_pain",
+      "acute_shoulder_pain"
+    ],
+    "strength_score": 1,
+    "mobility_score": 1,
+    "stability_score": 3,
+    "power_score": 1,
+    "conditioning_score": 5,
+    "card_text_short": "30 sec",
+    "card_text_long": "Drive knees from a strong plank at a sustainable pace.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "reviewed",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "push_up",
+    "name": "Push-Up",
+    "display_name": "Push-Up",
+    "equipment": [
+      "bodyweight"
+    ],
+    "equipment_group": "none",
+    "movement_pattern": "push",
+    "primary_category": "upper_body",
+    "secondary_categories": [
+      "core",
+      "stability"
+    ],
+    "difficulty_level": 2,
+    "intensity_level": "moderate",
+    "impact_level": "low",
+    "space_required": "small",
+    "skill_level": "beginner",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "general",
+      "athlete"
+    ],
+    "protocol_suitability": [
+      "amrap",
+      "emom",
+      "ladder"
+    ],
+    "default_reps": "8-15",
+    "default_time_seconds": 0,
+    "default_sets": 1,
+    "regression": "Incline push-up",
+    "progression": "Feet-elevated push-up",
+    "coaching_cues": [
+      "Brace ribs down",
+      "Hands under shoulders",
+      "Move as one plank"
+    ],
+    "safety_notes": [
+      "Avoid sagging hips",
+      "Stop for shoulder pain"
+    ],
+    "contraindications": [
+      "wrist_pain",
+      "acute_shoulder_pain"
+    ],
+    "strength_score": 3,
+    "mobility_score": 1,
+    "stability_score": 3,
+    "power_score": 1,
+    "conditioning_score": 2,
+    "card_text_short": "8-15 reps",
+    "card_text_long": "Keep a strong plank and complete smooth push-ups.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "reviewed",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "reverse_lunge",
+    "name": "Reverse Lunge",
+    "display_name": "Reverse Lunge",
+    "equipment": [
+      "bodyweight"
+    ],
+    "equipment_group": "none",
+    "movement_pattern": "squat",
+    "primary_category": "lower_body",
+    "secondary_categories": [
+      "stability"
+    ],
+    "difficulty_level": 2,
+    "intensity_level": "moderate",
+    "impact_level": "low",
+    "space_required": "small",
+    "skill_level": "beginner",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "general",
+      "athlete"
+    ],
+    "protocol_suitability": [
+      "amrap",
+      "emom",
+      "ladder"
+    ],
+    "default_reps": "8-12/side",
+    "default_time_seconds": 0,
+    "default_sets": 1,
+    "regression": "Assisted reverse lunge",
+    "progression": "Loaded reverse lunge",
+    "coaching_cues": [
+      "Step back softly",
+      "Front knee tracks toes",
+      "Drive through front foot"
+    ],
+    "safety_notes": [
+      "Use support if balance is limited",
+      "Avoid knee collapse"
+    ],
+    "contraindications": [
+      "acute_knee_pain",
+      "balance_limitation"
+    ],
+    "strength_score": 3,
+    "mobility_score": 2,
+    "stability_score": 3,
+    "power_score": 1,
+    "conditioning_score": 3,
+    "card_text_short": "8-12/side",
+    "card_text_long": "Alternate controlled reverse lunges on each side.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "reviewed",
+    "last_reviewed": "2026-06-01"
+  },
+  {
+    "id": "side_plank",
+    "name": "Side Plank",
+    "display_name": "Side Plank",
+    "equipment": [
+      "bodyweight"
+    ],
+    "equipment_group": "none",
+    "movement_pattern": "anti_rotate",
+    "primary_category": "core",
+    "secondary_categories": [
+      "stability"
+    ],
+    "difficulty_level": 2,
+    "intensity_level": "low",
+    "impact_level": "low",
+    "space_required": "small",
+    "skill_level": "beginner",
+    "beginner_safe": true,
+    "athlete_suitability": [
+      "general",
+      "athlete"
+    ],
+    "protocol_suitability": [
+      "emom",
+      "tabata",
+      "density"
+    ],
+    "default_reps": "0",
+    "default_time_seconds": 30,
+    "default_sets": 1,
+    "regression": "Knees-down side plank",
+    "progression": "Star side plank",
+    "coaching_cues": [
+      "Stack shoulders",
+      "Lift hips",
+      "Breathe steadily"
+    ],
+    "safety_notes": [
+      "Stop for shoulder pain",
+      "Keep neck relaxed"
+    ],
+    "contraindications": [
+      "acute_shoulder_pain"
+    ],
+    "strength_score": 1,
+    "mobility_score": 1,
+    "stability_score": 5,
+    "power_score": 0,
+    "conditioning_score": 1,
+    "card_text_short": "20-40 sec",
+    "card_text_long": "Hold a straight side plank with steady breathing.",
+    "status": "active",
+    "version": "1.0",
+    "review_status": "reviewed",
+    "last_reviewed": "2026-06-01"
+  }
+]

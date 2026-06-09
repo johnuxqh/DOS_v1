@@ -1,0 +1,17 @@
+composition_id,composition_name,description,active,applies_to_template_id,applies_to_protocol_type,slot_order,slot_name,required_movement_pattern,allowed_movement_patterns,required_primary_category,allowed_primary_categories,min_difficulty,max_difficulty,preferred_equipment,fallback_allowed,priority
+beginner_full_body,Beginners Full Body Balance,Balanced five-slot beginner workout.,TRUE,beginner_full_body,circuit,1,lower_body,,squat|hinge,lower_body,,1,3,bodyweight|resistance_band,TRUE,10
+beginner_full_body,Beginners Full Body Balance,Balanced five-slot beginner workout.,TRUE,beginner_full_body,circuit,2,push,push,,,,1,3,bodyweight,TRUE,20
+beginner_full_body,Beginners Full Body Balance,Balanced five-slot beginner workout.,TRUE,beginner_full_body,circuit,3,pull_or_posterior_chain,,pull|hinge,,,1,3,resistance_band|bodyweight,TRUE,30
+beginner_full_body,Beginners Full Body Balance,Balanced five-slot beginner workout.,TRUE,beginner_full_body,circuit,4,core,,,core,,1,3,bodyweight,TRUE,40
+beginner_full_body,Beginners Full Body Balance,Balanced five-slot beginner workout.,TRUE,beginner_full_body,circuit,5,mobility_finisher,,mobility|anti_rotate|hinge,,mobility|stability,1,3,bodyweight,TRUE,50
+hotel_bodyweight,Hotel Bodyweight Balance,Quiet balanced four-slot hotel workout.,TRUE,hotel_no_equipment,circuit,1,lower_body,,squat|hinge,lower_body,,1,3,bodyweight,TRUE,10
+hotel_bodyweight,Hotel Bodyweight Balance,Quiet balanced four-slot hotel workout.,TRUE,hotel_no_equipment,circuit,2,upper_body_push,push,,,,1,3,bodyweight,TRUE,20
+hotel_bodyweight,Hotel Bodyweight Balance,Quiet balanced four-slot hotel workout.,TRUE,hotel_no_equipment,circuit,3,core,,,core,,1,3,bodyweight,TRUE,30
+hotel_bodyweight,Hotel Bodyweight Balance,Quiet balanced four-slot hotel workout.,TRUE,hotel_no_equipment,circuit,4,conditioning,,locomotion,,conditioning|full_body,1,3,bodyweight,TRUE,40
+emom_12,EMOM 12 Balance,Balanced four-station EMOM rotation.,TRUE,emom_12,emom,1,lower_body,,squat|hinge,lower_body,,1,3,bodyweight|dumbbell|resistance_band,TRUE,10
+emom_12,EMOM 12 Balance,Balanced four-station EMOM rotation.,TRUE,emom_12,emom,2,upper_body,,push|pull,upper_body,,1,3,bodyweight|dumbbell|resistance_band,TRUE,20
+emom_12,EMOM 12 Balance,Balanced four-station EMOM rotation.,TRUE,emom_12,emom,3,core,,anti_rotate,core,,1,3,bodyweight|resistance_band,TRUE,30
+emom_12,EMOM 12 Balance,Balanced four-station EMOM rotation.,TRUE,emom_12,emom,4,full_body,,carry|locomotion,,full_body|conditioning,1,3,bodyweight|dumbbell,TRUE,40
+mobility_flow,Mobility Flow Balance,Three-slot mobility and stability flow.,TRUE,mobility_flow_10,mobility_flow,1,posterior_chain,hinge,,,,1,2,bodyweight,TRUE,10
+mobility_flow,Mobility Flow Balance,Three-slot mobility and stability flow.,TRUE,mobility_flow_10,mobility_flow,2,core_control,anti_rotate,,core,,1,2,bodyweight,TRUE,20
+mobility_flow,Mobility Flow Balance,Three-slot mobility and stability flow.,TRUE,mobility_flow_10,mobility_flow,3,stability_finish,,anti_rotate|hinge,,stability|mobility,1,2,bodyweight,TRUE,30

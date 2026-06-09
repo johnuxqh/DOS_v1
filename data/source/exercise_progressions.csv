@@ -1,0 +1,13 @@
+progression_id,exercise_id,related_exercise_id,relationship_type,progression_type,difficulty_delta,active,coaching_notes,safety_notes
+air_squat_to_dumbbell_goblet_squat,air_squat,dumbbell_goblet_squat,progression,load,1,TRUE,Add load only while squat mechanics remain controlled.,Keep the dumbbell close and use pain-free depth.
+dumbbell_goblet_squat_to_air_squat,dumbbell_goblet_squat,air_squat,regression,load,-1,TRUE,Remove external load while preserving squat pattern.,Use a box target if additional control is needed.
+band_row_to_dumbbell_row,band_row,dumbbell_row,progression,load,1,TRUE,Progress to a controlled dumbbell row when band rows are repeatable.,Support the torso and avoid twisting.
+dumbbell_row_to_band_row,dumbbell_row,band_row,regression,equipment,-1,TRUE,Use a band to reduce loading and simplify setup.,Anchor the band securely.
+kettlebell_deadlift_to_kettlebell_swing,kettlebell_deadlift,kettlebell_swing,progression,complexity,2,TRUE,Progress only after the hinge is consistent and powerful.,Learn swing technique before adding speed or fatigue.
+kettlebell_swing_to_kettlebell_deadlift,kettlebell_swing,kettlebell_deadlift,regression,complexity,-2,TRUE,Return to a controlled deadlift to practice the hinge.,Stop if the back rounds or pain appears.
+dead_bug_to_side_plank,dead_bug,side_plank,progression,stability,1,TRUE,Progress to a side plank for greater anti-rotation demand.,Use a knees-down side plank if needed.
+side_plank_to_dead_bug,side_plank,dead_bug,regression,stability,-1,TRUE,Use dead bugs to practice trunk control with more support.,Reduce limb range if the low back arches.
+dumbbell_rdl_to_barbell_rdl,dumbbell_romanian_deadlift,barbell_romanian_deadlift,progression,load,1,TRUE,Progress to the barbell only with a consistent hip hinge.,Use conservative load and keep the bar close.
+barbell_rdl_to_dumbbell_rdl,barbell_romanian_deadlift,dumbbell_romanian_deadlift,regression,load,-1,TRUE,Use dumbbells to simplify setup and reduce load.,Maintain a neutral spine and controlled range.
+dumbbell_goblet_to_kettlebell_goblet,dumbbell_goblet_squat,kettlebell_goblet_squat,lateral_variation,equipment,0,TRUE,Swap implements while preserving the same squat pattern.,Choose an implement you can hold securely.
+kettlebell_goblet_to_dumbbell_goblet,kettlebell_goblet_squat,dumbbell_goblet_squat,lateral_variation,equipment,0,TRUE,Swap implements while preserving the same squat pattern.,Choose an implement you can hold securely.

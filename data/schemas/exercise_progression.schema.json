@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deckofsweat.local/schemas/exercise_progression.schema.json",
+  "title": "Deck of Sweat Exercise Progression",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["progression_id", "exercise_id", "related_exercise_id", "relationship_type", "progression_type", "difficulty_delta", "active", "coaching_notes", "safety_notes"],
+  "properties": {
+    "progression_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "exercise_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "related_exercise_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "relationship_type": {"type": "string", "enum": ["progression", "regression", "lateral_variation"]},
+    "progression_type": {"type": "string", "enum": ["load", "volume", "tempo", "complexity", "range_of_motion", "stability", "impact", "equipment", "skill"]},
+    "difficulty_delta": {"type": "integer", "minimum": -5, "maximum": 5},
+    "active": {"type": "boolean"},
+    "coaching_notes": {"type": "string", "minLength": 1},
+    "safety_notes": {"type": "string", "minLength": 1}
+  }
+}

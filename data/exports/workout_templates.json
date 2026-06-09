@@ -1,0 +1,249 @@
+[
+  {
+    "template_id": "amrap_12",
+    "template_name": "AMRAP 12",
+    "description": "Twelve-minute density block using four balanced cards.",
+    "tier": "free",
+    "deck_id": "free_bodyweight",
+    "protocol_type": "amrap",
+    "duration_minutes": 12,
+    "rounds": 1,
+    "work_seconds": 720,
+    "rest_seconds": 0,
+    "target_intensity": "RPE 7",
+    "equipment_required": [
+      "bodyweight"
+    ],
+    "movement_focus": [
+      "full_body",
+      "conditioning"
+    ],
+    "scoring_method": "rounds_plus_reps",
+    "tracking_enabled": true,
+    "coaching_notes": [
+      "Pace the first half conservatively",
+      "Record rounds and extra reps"
+    ],
+    "safety_notes": [
+      "Prioritize technique over score",
+      "Rest before form breaks"
+    ]
+  },
+  {
+    "template_id": "beginner_full_body",
+    "template_name": "Beginner Full Body",
+    "description": "Low-impact beginner template covering squat hinge push pull and core.",
+    "tier": "free",
+    "deck_id": "free_beginner",
+    "protocol_type": "circuit",
+    "duration_minutes": 15,
+    "rounds": 3,
+    "work_seconds": 35,
+    "rest_seconds": 25,
+    "target_intensity": "RPE 5-6",
+    "equipment_required": [
+      "bodyweight",
+      "resistance_band"
+    ],
+    "movement_focus": [
+      "lower_body",
+      "upper_body",
+      "core"
+    ],
+    "scoring_method": "quality_rounds",
+    "tracking_enabled": true,
+    "coaching_notes": [
+      "Use regressions freely",
+      "Finish each set with reps in reserve"
+    ],
+    "safety_notes": [
+      "Avoid high-impact cards",
+      "Keep pain-free range of motion"
+    ]
+  },
+  {
+    "template_id": "bodyweight_burner_12",
+    "template_name": "12-Minute Bodyweight Burner",
+    "description": "Fast simple bodyweight circuit for compact conditioning.",
+    "tier": "free",
+    "deck_id": "free_bodyweight",
+    "protocol_type": "circuit",
+    "duration_minutes": 12,
+    "rounds": 4,
+    "work_seconds": 40,
+    "rest_seconds": 20,
+    "target_intensity": "RPE 7-8",
+    "equipment_required": [
+      "bodyweight"
+    ],
+    "movement_focus": [
+      "full_body",
+      "conditioning"
+    ],
+    "scoring_method": "rounds_completed",
+    "tracking_enabled": true,
+    "coaching_notes": [
+      "Move smoothly before increasing speed",
+      "Keep transitions short"
+    ],
+    "safety_notes": [
+      "Use low-impact substitutions if needed",
+      "Stop for sharp pain"
+    ]
+  },
+  {
+    "template_id": "dumbbell_circuit_20",
+    "template_name": "20-Minute Dumbbell Circuit",
+    "description": "Full-body dumbbell circuit for strength endurance.",
+    "tier": "plus",
+    "deck_id": "plus_dumbbell",
+    "protocol_type": "circuit",
+    "duration_minutes": 20,
+    "rounds": 4,
+    "work_seconds": 45,
+    "rest_seconds": 15,
+    "target_intensity": "RPE 7",
+    "equipment_required": [
+      "dumbbell"
+    ],
+    "movement_focus": [
+      "lower_body",
+      "upper_body",
+      "core"
+    ],
+    "scoring_method": "total_rounds",
+    "tracking_enabled": true,
+    "coaching_notes": [
+      "Choose a load you can control for all rounds",
+      "Rest before grip fails"
+    ],
+    "safety_notes": [
+      "Keep spine neutral on hinges",
+      "Set weights down safely"
+    ]
+  },
+  {
+    "template_id": "emom_12",
+    "template_name": "EMOM 12",
+    "description": "Twelve-minute every-minute workout rotating four cards.",
+    "tier": "plus",
+    "deck_id": "plus_mixed",
+    "protocol_type": "emom",
+    "duration_minutes": 12,
+    "rounds": 3,
+    "work_seconds": 45,
+    "rest_seconds": 15,
+    "target_intensity": "RPE 6-8",
+    "equipment_required": [
+      "bodyweight",
+      "dumbbell",
+      "resistance_band"
+    ],
+    "movement_focus": [
+      "full_body"
+    ],
+    "scoring_method": "completed_minutes",
+    "tracking_enabled": true,
+    "coaching_notes": [
+      "Start each card at the top of the minute",
+      "Scale reps to preserve rest"
+    ],
+    "safety_notes": [
+      "Reduce reps if work exceeds 45 seconds",
+      "Do not chase failure"
+    ]
+  },
+  {
+    "template_id": "hotel_no_equipment",
+    "template_name": "No-Equipment Hotel Workout",
+    "description": "Travel-friendly no-equipment session for small spaces.",
+    "tier": "free",
+    "deck_id": "free_bodyweight",
+    "protocol_type": "circuit",
+    "duration_minutes": 10,
+    "rounds": 3,
+    "work_seconds": 40,
+    "rest_seconds": 20,
+    "target_intensity": "RPE 6-7",
+    "equipment_required": [
+      "bodyweight"
+    ],
+    "movement_focus": [
+      "full_body",
+      "conditioning"
+    ],
+    "scoring_method": "rounds_completed",
+    "tracking_enabled": false,
+    "coaching_notes": [
+      "Pick quiet movements",
+      "Use controlled tempo in shared spaces"
+    ],
+    "safety_notes": [
+      "Avoid jumping if floor surface is slippery",
+      "Keep the area clear"
+    ]
+  },
+  {
+    "template_id": "mobility_flow_10",
+    "template_name": "Mobility Flow",
+    "description": "Low-intensity mobility sequence for recovery or warmups.",
+    "tier": "free",
+    "deck_id": "free_mobility",
+    "protocol_type": "mobility_flow",
+    "duration_minutes": 10,
+    "rounds": 2,
+    "work_seconds": 45,
+    "rest_seconds": 15,
+    "target_intensity": "RPE 3-4",
+    "equipment_required": [
+      "bodyweight"
+    ],
+    "movement_focus": [
+      "mobility",
+      "stability"
+    ],
+    "scoring_method": "completed_flow",
+    "tracking_enabled": false,
+    "coaching_notes": [
+      "Move slowly with nasal breathing",
+      "Stay below end-range strain"
+    ],
+    "safety_notes": [
+      "Never force range of motion",
+      "Avoid painful positions"
+    ]
+  },
+  {
+    "template_id": "strength_ladder_18",
+    "template_name": "Strength Ladder",
+    "description": "Progressive strength ladder using loaded lower and upper patterns.",
+    "tier": "pro",
+    "deck_id": "pro_strength",
+    "protocol_type": "ladder",
+    "duration_minutes": 18,
+    "rounds": 5,
+    "work_seconds": 0,
+    "rest_seconds": 30,
+    "target_intensity": "RPE 7-8",
+    "equipment_required": [
+      "dumbbell",
+      "kettlebell",
+      "barbell"
+    ],
+    "movement_focus": [
+      "lower_body",
+      "upper_body",
+      "strength"
+    ],
+    "scoring_method": "highest_completed_rung",
+    "tracking_enabled": true,
+    "coaching_notes": [
+      "Increase reps gradually",
+      "Keep load submaximal"
+    ],
+    "safety_notes": [
+      "Stop the ladder if technique changes",
+      "Use spotter rules where relevant"
+    ]
+  }
+]

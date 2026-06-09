@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://deckofsweat.local/schemas/rule.schema.json",
+  "title": "Deck of Sweat Rule",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["id", "rule_type", "name", "description", "applies_to", "value", "severity", "status"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "rule_type": {"type": "string", "minLength": 1},
+    "name": {"type": "string", "minLength": 1},
+    "description": {"type": "string", "minLength": 1},
+    "applies_to": {"type": "string", "minLength": 1},
+    "value": {"type": "string", "minLength": 1},
+    "severity": {"type": "string", "enum": ["warning", "error"]},
+    "status": {"type": "string", "enum": ["draft", "active", "retired"]}
+  }
+}
