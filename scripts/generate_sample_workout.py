@@ -385,7 +385,9 @@ def apply_history_adaptation(
             relationship_type = "progression"
         if not relationship_type:
             continue
-        for relation in get_related_exercises(exercise["id"], relationship_type, progression_records):
+        relations = get_related_exercises(exercise["id"], relationship_type, progression_records)
+        suggestion_recorded = False
+        for relation in relations:
             related_id = relation["related_exercise_id"]
             if related_id not in eligible_by_id or related_id in selected_ids:
                 continue
@@ -395,7 +397,13 @@ def apply_history_adaptation(
             selected_ids.add(related_id)
             adapted[index] = eligible_by_id[related_id]
             notes.append(f"suggested {relationship_type}: {exercise['id']} -> {related_id}")
+            suggestion_recorded = True
             break
+        if relations and not suggestion_recorded:
+            notes.append(
+                f"suggested {relationship_type}: {exercise['id']} -> "
+                f"{relations[0]['related_exercise_id']} (hint only; not eligible for this workout)"
+            )
     return adapted, notes
 
 
