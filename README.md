@@ -70,6 +70,11 @@ The script loads generated JSON when available, otherwise it reads the CSV sourc
 pytest
 ```
 
+The suite includes real system scenario tests that generate complete Beginner
+Full Body, No-Equipment Hotel, EMOM 12, and Mobility Flow workouts and protect
+deck, composition, progression-hint, safety, and history-adaptation behaviour.
+See [`docs/system_scenario_tests.md`](docs/system_scenario_tests.md).
+
 ## Future support
 
 This repository is structured to support later phases without locking the project into an app architecture too early:
