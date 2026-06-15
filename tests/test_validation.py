@@ -376,6 +376,7 @@ def test_generator_works_with_history() -> None:
     workout = build_workout(equipment=None, template_id="beginner_full_body", history_path=ROOT / "data/sample/sample_workout_history.json")
     assert workout["cards"]
     assert workout["adaptation_notes"]
+    assert any(note.startswith("suggested progression: air_squat ->") for note in workout["adaptation_notes"])
 
 
 def test_explain_adaptation_produces_notes() -> None:
