@@ -75,6 +75,19 @@ Full Body, No-Equipment Hotel, EMOM 12, and Mobility Flow workouts and protect
 deck, composition, progression-hint, safety, and history-adaptation behaviour.
 See [`docs/system_scenario_tests.md`](docs/system_scenario_tests.md).
 
+## Run local demo
+
+Install the lightweight Streamlit demo dependency and launch the P4.00 clickable
+wireframe over the existing engine:
+
+```bash
+python -m pip install -e '.[demo]'
+streamlit run app/demo.py
+```
+
+See [`docs/local_demo.md`](docs/local_demo.md) for supported controls, the demo's
+intentional limits, and suggested manual checks.
+
 ## Future support
 
 This repository is structured to support later phases without locking the project into an app architecture too early:
